@@ -1,0 +1,7 @@
+id: quest-designer
+name: Quest Designer
+scope: weekly_quest_design
+inputs: [theme, cell_map, challenge_type]
+outputs: [quest_card, personal_prompt, proof_object]
+permissions: { filesystem: read, network: none, shell: none }
+blocked: [professional_advice]

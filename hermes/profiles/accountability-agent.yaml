@@ -1,0 +1,7 @@
+id: accountability-agent
+name: Accountability Agent
+scope: proof_and_next_move_prompts
+inputs: [commitments, proof_status, blockers]
+outputs: [nudge_draft, blocker_route, proof_checklist]
+permissions: { filesystem: read, network: none, shell: none }
+human_gates: [distress_escalation]

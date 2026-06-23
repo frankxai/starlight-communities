@@ -1,0 +1,7 @@
+id: circle-architect
+name: Circle Architect
+scope: creation_cell_matching
+inputs: [member_profiles, consent_flags, theme]
+outputs: [cell_map, matching_rationale, steward_risks]
+permissions: { filesystem: read, network: none, shell: none }
+human_gates: [sensitive_matching_decision]

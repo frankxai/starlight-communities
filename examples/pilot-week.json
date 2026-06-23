@@ -1,0 +1,77 @@
+{
+  "week_id": "2026-W27",
+  "theme": "visible proof",
+  "challenge_type": "ai_companion",
+  "created_by": "quest_designer",
+  "members": [
+    {
+      "member_id": "mira",
+      "display_name": "Mira",
+      "timezone": "America/New_York",
+      "goals": ["mind systems", "weekly publishing"],
+      "skills": ["writing", "research", "facilitation"],
+      "current_project": "Ship a personal knowledge map for creative momentum.",
+      "preferred_rhythm": "weekday_evenings",
+      "social_energy": "pair",
+      "growth_edge": "Turning private insight into visible artifacts.",
+      "consent_flags": {
+        "allowCellMatching": true,
+        "allowProfileMemory": true,
+        "allowAsyncProofSummary": true,
+        "allowRawMediaStorage": false,
+        "allowPublicRecognition": false,
+        "allowPlatformSync": false
+      }
+    },
+    {
+      "member_id": "sol",
+      "display_name": "Sol",
+      "timezone": "America/Los_Angeles",
+      "goals": ["freedom systems", "offer design"],
+      "skills": ["automation", "sales", "systems thinking"],
+      "current_project": "Map one lifestyle lever into a tiny service offer.",
+      "preferred_rhythm": "weekday_mornings",
+      "social_energy": "small_group"
+    },
+    {
+      "member_id": "rhea",
+      "display_name": "Rhea",
+      "timezone": "Europe/Amsterdam",
+      "goals": ["events", "community rituals"],
+      "skills": ["hosting", "storytelling", "operations"],
+      "current_project": "Design a five-person salon for builders.",
+      "preferred_rhythm": "async_first",
+      "social_energy": "host"
+    },
+    {
+      "member_id": "kai",
+      "display_name": "Kai",
+      "timezone": "America/New_York",
+      "goals": ["content", "ai companion"],
+      "skills": ["video", "prompting", "editing"],
+      "current_project": "Build a prompt that turns voice notes into draft posts.",
+      "preferred_rhythm": "weekday_evenings",
+      "social_energy": "pair"
+    },
+    {
+      "member_id": "nora",
+      "display_name": "Nora",
+      "timezone": "Europe/London",
+      "goals": ["mind systems", "voice"],
+      "skills": ["coaching", "voice notes", "pattern recognition"],
+      "current_project": "Record a two-minute lesson and extract a model from it.",
+      "preferred_rhythm": "weekends",
+      "social_energy": "solo"
+    },
+    {
+      "member_id": "ion",
+      "display_name": "Ion",
+      "timezone": "America/Chicago",
+      "goals": ["ai companion", "freedom systems"],
+      "skills": ["typescript", "agent design", "documentation"],
+      "current_project": "Create a tiny agent that protects Wednesday creation time.",
+      "preferred_rhythm": "weekday_afternoons",
+      "social_energy": "variable"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+id: starlight-communities
+name: Starlight Communities
+version: 0.1.0
+status: public-safe-starter
+canonical_package: "@starlight/communities"
+summary: Agentic creation cells for people building freedom systems, mind systems, content, events, and intelligent lives.
+
+operating_principles:
+  - The weekly loop is the product.
+  - Community platforms are surfaces, not the canonical brain.
+  - Agents draft and prepare; humans approve external actions.
+  - Personal profiles are private by default.
+  - Every week should produce proof, reflection, and a next commitment.
+
+weekly_loop:
+  monday:
+    system_action: Send weekly quest and personal prompt.
+    output: Quest card and personal commitment.
+  tuesday:
+    system_action: Propose pair spark calls.
+    output: Pair agenda and next micro-step.
+  wednesday:
+    system_action: Run deep creation lab.
+    output: Draft, map, prompt, post, event plan, or agent.
+  thursday:
+    system_action: Request async proof.
+    output: Proof note, blocker, and next move.
+  friday:
+    system_action: Run demo, reflection, and recognition.
+    output: Artifact record, reflection, and next commitment.
+  weekend:
+    system_action: Offer salon, walk, or event prompt.
+    output: Story, connection note, or event artifact.
+
+agents:
+  - id: community_steward
+    layer: steward
+    purpose: Run cadence, synthesis, safety gates, and escalation.
+  - id: circle_architect
+    layer: worker
+    purpose: Form 3-5 person cells by goal, energy, skill, rhythm, and consent.
+  - id: quest_designer
+    layer: worker
+    purpose: Turn themes into weekly quest cards and personal prompts.
+  - id: invitation_agent
+    layer: worker
+    purpose: Draft warm personalized invites and follow-ups.
+  - id: accountability_agent
+    layer: worker
+    purpose: Request proof, blockers, voice notes, and next moves without shame.
+  - id: artifact_agent
+    layer: worker
+    purpose: Package sessions into posts, docs, maps, prompts, and event plans.
+  - id: memory_agent
+    layer: worker
+    purpose: Capture profile deltas, reflections, commitments, and insights.
+
+objects:
+  - CommunityMemberProfile
+  - CreationCell
+  - Quest
+  - WeeklyCommitment
+  - Artifact
+  - Reflection
+  - ActionGate
+  - MemoryRecord
+
+gates:
+  human_required:
+    - external_invite_send
+    - direct_message_send
+    - public_artifact_publish
+    - calendar_event_with_external_attendees
+    - raw_voice_or_video_storage
+    - leaderboard_publication
+    - paid_service_or_subscription
+  blocked:
+    - professional_advice
+  autonomous_private_scope:
+    - draft_invite
+    - propose_cells
+    - generate_quest
+    - summarize_reflection
+    - package_artifact
+    - write_private_memory
+
+skills:
+  format: Agent Skill folder with SKILL.md.
+  paths:
+    - skills/starlight-community-steward/SKILL.md
+    - skills/circle-architect/SKILL.md
+    - skills/quest-designer/SKILL.md
+    - skills/invitation-agent/SKILL.md
+    - skills/accountability-agent/SKILL.md
+    - skills/artifact-agent/SKILL.md
+    - skills/memory-agent/SKILL.md
+
+openclaw:
+  registry: openclaw/REGISTRY.md
+  soul_templates:
+    - openclaw/agents/community-steward/SOUL.md
+    - openclaw/agents/circle-architect/SOUL.md
+    - openclaw/agents/quest-designer/SOUL.md
+    - openclaw/agents/invitation-agent/SOUL.md
+    - openclaw/agents/accountability-agent/SOUL.md
+    - openclaw/agents/artifact-agent/SOUL.md
+    - openclaw/agents/memory-agent/SOUL.md
+
+hermes:
+  claw: hermes/CLAW.md
+  profiles:
+    - hermes/profiles/community-steward.yaml
+    - hermes/profiles/circle-architect.yaml
+    - hermes/profiles/quest-designer.yaml
+    - hermes/profiles/invitation-agent.yaml
+    - hermes/profiles/accountability-agent.yaml
+    - hermes/profiles/artifact-agent.yaml
+    - hermes/profiles/memory-agent.yaml
+
+metrics:
+  activation:
+    - monday_commitment_rate
+    - tuesday_pair_completion_rate
+    - wednesday_artifact_draft_rate
+    - thursday_proof_submission_rate
+    - friday_reflection_completion_rate
+  quality:
+    - artifacts_shipped_per_active_member
+    - helpful_peer_touches
+    - week_over_week_member_retention
+    - member_reported_felt_seen
+    - member_reported_made_progress
+  anti_metrics:
+    - raw_message_volume
+    - forced_public_posting
+    - leaderboard_anxiety
+    - agent_over_nudging
+
+next_build_step: Build a human-approved pilot UI or integration surface after one concierge week produces proof.

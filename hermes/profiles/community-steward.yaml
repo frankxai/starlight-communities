@@ -1,0 +1,7 @@
+id: community-steward
+name: Community Steward
+scope: weekly_loop_synthesis
+inputs: [run_sheet, cell_status, gates]
+outputs: [steward_packet, friday_synthesis, next_week_actions]
+permissions: { filesystem: read, network: none, shell: none }
+human_gates: [external_send, public_publish, leaderboard_publication, paid_service]

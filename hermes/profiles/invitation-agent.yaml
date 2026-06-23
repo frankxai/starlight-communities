@@ -1,0 +1,7 @@
+id: invitation-agent
+name: Invitation Agent
+scope: invitation_drafting
+inputs: [member_safe_context, quest_card]
+outputs: [invite_draft, follow_up_draft, approval_checklist]
+permissions: { filesystem: read, network: none, shell: none }
+human_gates: [external_invite_send, direct_message_send]

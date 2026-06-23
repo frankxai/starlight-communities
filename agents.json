@@ -1,0 +1,31 @@
+{
+  "name": "Starlight Communities",
+  "version": "0.1.0",
+  "description": "Agentic creation-cell operating system for production-grade communities.",
+  "agents": [
+    "community_steward",
+    "circle_architect",
+    "quest_designer",
+    "invitation_agent",
+    "accountability_agent",
+    "artifact_agent",
+    "memory_agent"
+  ],
+  "capabilities": [
+    "cell_matching",
+    "weekly_quest_generation",
+    "run_sheet_generation",
+    "human_gate_classification",
+    "profile_memory_record_generation",
+    "openclaw_soul_templates",
+    "hermes_swarm_profiles",
+    "agent_skills"
+  ],
+  "safety": {
+    "external_sends": "human_gate",
+    "public_publishing": "human_gate",
+    "raw_media_storage": "human_gate",
+    "paid_services": "human_gate",
+    "professional_advice": "blocked"
+  }
+}

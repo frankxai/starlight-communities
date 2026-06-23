@@ -1,0 +1,7 @@
+id: memory-agent
+name: Memory Agent
+scope: private_safe_memory_capture
+inputs: [profile, reflection, commitment, artifact]
+outputs: [memory_record, profile_delta, provenance]
+permissions: { filesystem: read, network: none, shell: none }
+human_gates: [raw_voice_or_video_storage, public_memory_export]

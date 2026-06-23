@@ -1,0 +1,21 @@
+# Starlight Communities
+
+Use this repo to build agentic community systems around small weekly creation
+cells.
+
+Core files:
+
+- `src/schemas.ts`: canonical object schemas.
+- `src/run-sheet.ts`: weekly run-sheet generation.
+- `src/matching.ts`: 3-5 person cell matching.
+- `src/gates.ts`: safety and human-approval classifier.
+- `modules/starlight-communities.module.yaml`: agent-readable module manifest.
+- `skills/*/SKILL.md`: agent skills.
+- `openclaw/`: OpenClaw-style SOUL templates and registry.
+- `hermes/`: Hermes-style swarm contracts.
+
+Rules:
+
+- Do not use private member data in examples.
+- Do not send or publish without approval.
+- Treat platforms as adapters, not canonical stores.
