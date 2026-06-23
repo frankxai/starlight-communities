@@ -12,6 +12,9 @@ auto-trusting third-party skills.
 | https://github.com/nousresearch/hermes-agent | Learning loop, scheduling, subagents, persistent memory | Use as inspiration; this repo stays deterministic and dry-run first |
 | https://github.com/mgechev/skills-best-practices | Small skill folders with `SKILL.md`, scripts, references, and assets | Keep skills permission-scoped and under 500 lines |
 | https://github.com/mergisi/awesome-openclaw-agents | SOUL template portability and agent catalog structure | Treat templates as examples, not production authority |
+| https://community-canvas.org/ | Community identity, experience, and structure framing | Use as a question model, not an answer key |
+| https://www.cmxhub.com/blog/the-spaces-model | SPACES value pillar mapping | Pick one primary value pillar per pilot |
+| https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes | README should explain usefulness, usage, help, and maintainers | Keep examples runnable and docs current |
 
 ## Production Rule
 

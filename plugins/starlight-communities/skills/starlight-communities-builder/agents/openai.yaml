@@ -1,0 +1,5 @@
+interface:
+  display_name: "Starlight Communities Builder"
+  short_description: "Build agentic creation-cell communities"
+  default_prompt: "Use $starlight-communities-builder to design and validate an agentic creation-cell pilot."
+  brand_color: "#6D5DF7"

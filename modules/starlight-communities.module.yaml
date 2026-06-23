@@ -4,6 +4,17 @@ version: 0.1.0
 status: public-safe-starter
 canonical_package: "@starlight/communities"
 summary: Agentic creation cells for people building freedom systems, mind systems, content, events, and intelligent lives.
+runtime:
+  cli: starlight-communities run-sheet examples/pilot-week.json
+  local_api: pnpm dev
+  healthcheck: GET /health
+  routes:
+    - POST /v1/run-sheet
+    - POST /v1/blueprint
+  deploy:
+    local: pnpm build && pnpm serve
+    docker: Dockerfile
+    railway: railway.json
 
 operating_principles:
   - The weekly loop is the product.
@@ -116,6 +127,17 @@ hermes:
     - hermes/profiles/accountability-agent.yaml
     - hermes/profiles/artifact-agent.yaml
     - hermes/profiles/memory-agent.yaml
+  workflows:
+    - hermes/workflows/weekly-creation-cell.yaml
+    - hermes/workflows/pilot-launch.yaml
+    - hermes/workflows/artifact-engine.yaml
+    - hermes/workflows/member-memory.yaml
+
+codex_plugin:
+  manifest: plugins/starlight-communities/.codex-plugin/plugin.json
+  marketplace: .agents/plugins/marketplace.json
+  skills:
+    - plugins/starlight-communities/skills/starlight-communities-builder/SKILL.md
 
 metrics:
   activation:

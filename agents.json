@@ -15,12 +15,23 @@
     "cell_matching",
     "weekly_quest_generation",
     "run_sheet_generation",
+    "community_blueprint_generation",
+    "local_http_api",
+    "railway_deployment",
     "human_gate_classification",
     "profile_memory_record_generation",
     "openclaw_soul_templates",
     "hermes_swarm_profiles",
+    "hermes_workflows",
+    "codex_plugin",
     "agent_skills"
   ],
+  "runtime": {
+    "cli": "pnpm start -- run-sheet examples/pilot-week.json",
+    "api": "pnpm dev",
+    "healthcheck": "GET /health",
+    "railway": "railway.json"
+  },
   "safety": {
     "external_sends": "human_gate",
     "public_publishing": "human_gate",

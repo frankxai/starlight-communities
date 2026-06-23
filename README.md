@@ -1,100 +1,252 @@
 # Starlight Communities
 
-Production-grade agentic community systems for small creation cells.
+[![CI](https://github.com/frankxai/starlight-communities/actions/workflows/ci.yml/badge.svg)](https://github.com/frankxai/starlight-communities/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-111827.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/Node-%3E%3D20.11-0f766e.svg)](package.json)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-2563eb.svg)](tsconfig.json)
 
-Starlight Communities turns a community from a passive chat room into a weekly
-operating loop: 3-5 people, one shared theme, one mission, one artifact shipped,
-one reflection captured, and one next commitment.
+Agentic community infrastructure for people building freedom systems, mind systems, content, events, and intelligent lives.
 
-The repo is built for:
+Starlight Communities turns a community from a passive chat room into a weekly creation-cell operating system:
 
-- community stewards running high-trust creation cells;
-- builders creating freedom systems, mind systems, content, events, and
-  intelligent lives;
-- agents that draft, match, nudge, package artifacts, and remember context
-  without sending, publishing, or exposing private data without approval.
+```text
+3-5 people -> weekly quest -> pair spark -> creation lab -> proof -> reflection -> next commitment
+```
 
-## What Is Included
+It gives community builders the thing most platforms do not: a repeatable system for helping members ship visible proof together.
 
-- TypeScript core package with Zod schemas.
-- Deterministic cell matching with consent and group-size constraints.
-- Weekly run-sheet generation for the Monday-Friday loop.
-- Human-gated safety classifier for invites, DMs, publishing, calendars, and
-  raw media storage.
-- Agent Skills for the Community Steward and six worker agents.
-- OpenClaw-style SOUL templates and a strict local registry posture.
-- Hermes-style profiles for swarm routing and synthesis.
-- Example pilot input, tests, CI, and machine-readable manifests.
+## Why It Exists
 
-## Core Idea
+Most communities optimize for posts, messages, and events. Starlight Communities optimizes for identity, progress, recognition, belonging, and proof.
 
-The community platform is not the brain. The canonical spine is:
+The core bet:
 
-1. profile and memory;
-2. cell matching;
-3. weekly quest;
-4. proof and artifact;
-5. reflection and profile delta;
-6. next commitment.
+> The weekly ritual and member memory are the product. Circle, Discord, Slack, email, and web apps are surfaces.
 
-Circle, Discord, Slack, email, calendar, and native web UI can become surfaces.
-The system should still work if every platform is swapped out.
+## What You Can Build
+
+- A 5-15 person concierge pilot.
+- A creator cohort with weekly artifacts.
+- A founder circle that ships proof every Friday.
+- A private mastermind with memory and safety gates.
+- A Circle, Discord, Slack, or native web community that keeps SIS-style memory as canonical.
+- A Railway-hosted API for run sheets and community blueprints.
+- A Codex plugin for agentic community design and operations.
+
+## System Map
+
+```mermaid
+flowchart LR
+  A[Member Intake] --> B[Private Profile]
+  B --> C[Circle Architect]
+  C --> D[Creation Cell]
+  D --> E[Weekly Quest]
+  E --> F[Commitments]
+  F --> G[Proof Object]
+  G --> H[Artifact]
+  H --> I[Friday Reflection]
+  I --> J[Memory Record]
+  J --> K[Next Commitment]
+
+  S[Community Steward] --> C
+  S --> E
+  S --> L[Human Gates]
+  L --> M[Invites, Publishing, Calendar, Raw Media, Paid Tools]
+```
+
+## Agent Team
+
+```mermaid
+flowchart TB
+  Steward[Community Steward]
+  Steward --> Architect[Circle Architect]
+  Steward --> Quest[Quest Designer]
+  Steward --> Invite[Invitation Agent]
+  Steward --> Accountability[Accountability Agent]
+  Steward --> Artifact[Artifact Agent]
+  Steward --> Memory[Memory Agent]
+```
+
+| Agent | Job | Human Gate |
+|---|---|---|
+| Community Steward | Weekly cadence, synthesis, escalation | External action approval |
+| Circle Architect | 3-5 person cell matching | Sensitive match review |
+| Quest Designer | Weekly quests and prompts | Professional advice block |
+| Invitation Agent | Invite and follow-up drafts | Send approval |
+| Accountability Agent | Proof, blockers, next moves | Distress escalation |
+| Artifact Agent | Posts, docs, maps, prompts, event plans | Publish approval |
+| Memory Agent | Profile deltas and memory records | Raw media consent |
 
 ## Quick Start
 
 ```bash
 pnpm install
 pnpm validate
-pnpm build
+pnpm smoke:cli
+```
+
+Generate a run sheet:
+
+```bash
 pnpm start -- run-sheet examples/pilot-week.json
 ```
 
-The CLI prints a JSON weekly run sheet with cells, quests, commitments, cadence,
-memory records, and safety gates.
+Run the local API:
 
-## First Workflow
+```bash
+pnpm dev
+curl http://localhost:3000/health
+```
 
-1. Capture member intake.
-2. Generate a weekly run sheet.
-3. Review proposed cells and quest cards.
-4. Approve outbound invites or prompts manually.
-5. Collect proof and artifacts.
-6. Capture Friday reflections.
-7. Write profile deltas to the canonical memory layer.
+Generate over HTTP:
 
-## Safety Model
+```bash
+curl -X POST http://localhost:3000/v1/run-sheet \
+  -H "content-type: application/json" \
+  --data @examples/pilot-week.json
+```
 
-Agents may draft, summarize, propose, package, and prepare. Agents may not send,
-publish, rank sensitive progress, create external calendar events, store raw
-voice/video, or add paid services without explicit human approval.
+## API
+
+| Route | Method | Purpose |
+|---|---|---|
+| `/health` | `GET` | Service health check |
+| `/v1/run-sheet` | `POST` | Generate weekly cells, quests, commitments, gates, memory records |
+| `/v1/blueprint` | `POST` | Generate a community strategy blueprint |
+
+Blueprint example:
+
+```json
+{
+  "name": "Visible Proof Guild",
+  "audience": "AI-native creators",
+  "member_promise": "Ship one proof object per week with a small cell.",
+  "value_pillar": "engagement",
+  "primary_surface": "railway_api",
+  "pilot": {
+    "week_id": "2026-W27",
+    "theme": "visible proof",
+    "challenge_type": "ai_companion",
+    "members": []
+  }
+}
+```
+
+## Deployment
+
+Local:
+
+```bash
+pnpm build
+pnpm serve
+```
+
+Railway:
+
+```bash
+railway up
+```
+
+The repo includes:
+
+- `Dockerfile`
+- `railway.json`
+- `/health` health check
+- `PORT` and `HOST` env support
+
+No secrets are required for the core API. Platform adapters should add dry-run mode and explicit human approval before sends, publishing, calendar actions, or paid-service activation.
+
+## Codex Plugin
+
+This repo includes a repo-local Codex plugin:
+
+```text
+plugins/starlight-communities/
+```
+
+It contains:
+
+- `.codex-plugin/plugin.json`
+- `$starlight-communities-builder`
+- strategy, architecture, and workflow references
+- a deterministic community-plan scorer
+- visual plugin assets
+
+The plugin is listed in:
+
+```text
+.agents/plugins/marketplace.json
+```
+
+## OpenClaw And Hermes
+
+OpenClaw templates:
+
+```text
+openclaw/REGISTRY.md
+openclaw/agents/*/SOUL.md
+```
+
+Hermes routing:
+
+```text
+hermes/CLAW.md
+hermes/profiles/*.yaml
+hermes/workflows/*.yaml
+```
+
+These are intentionally permission-scoped. They are contracts for bounded agents, not unchecked automation.
 
 ## Repository Map
 
 | Path | Purpose |
 |---|---|
-| `src/` | TypeScript schemas, matching, gates, quests, memory, and run-sheet engine |
-| `skills/` | Agent Skills compatible with Codex/Claude-style skill loaders |
-| `openclaw/` | OpenClaw-oriented registry notes and SOUL agent templates |
-| `hermes/` | Hermes-style swarm profile contracts |
+| `src/` | TypeScript schemas, matching, gates, strategy, server, CLI |
+| `test/` | Vitest coverage for schemas, gates, matching, strategy, server |
+| `skills/` | Public-safe Agent Skills for the seven community agents |
+| `plugins/` | Codex plugin and `$starlight-communities-builder` skill |
+| `openclaw/` | SOUL templates and registry posture |
+| `hermes/` | Claw, profiles, workflows |
 | `modules/` | Machine-readable module manifest |
-| `examples/` | Pilot week input data |
-| `docs/` | Architecture, pilot kit, integrations, security, decisions |
+| `docs/` | Architecture, API, deployment, strategy, security, roadmap |
+| `examples/` | Synthetic pilot data only |
 
-## Public/Private Boundary
+## Design Principles
 
-This repository is public-safe. Do not commit private member profiles, raw
-voice/video, live invite lists, secrets, tokens, API keys, or private matching
-rationale. Use examples with synthetic people only.
+1. Member promise before platform.
+2. Cells before channels.
+3. Quests, not homework.
+4. Proof over posting.
+5. Helpful recognition, never shame.
+6. Agent drafts, human approves.
+7. Private by default.
+8. Platforms are adapters.
+9. Metrics follow strategy.
+10. Every week creates memory.
 
-## Research Influences
+## Inspired By
 
-Patterns were adapted from Starlight SIS/ACOS/ALOS/swarm doctrine and compared
-against current public agent ecosystems:
+- Community Canvas: identity, experience, structure.
+- CMX SPACES: map community work to a primary value pillar.
+- Orbit-style member journey thinking: visitors become members, contributors, hosts, and alumni.
+- GitHub README guidance: explain why useful, what it does, and how to use it.
+- Awesome Agent Skills, OpenClaw, Hermes Agent, and skill best-practice repositories.
 
-- Awesome Agent Skills: https://github.com/VoltAgent/awesome-agent-skills
-- OpenClaw: https://github.com/openclaw/openclaw
-- Hermes Agent: https://github.com/nousresearch/hermes-agent
-- Agent skill best practices: https://github.com/mgechev/skills-best-practices
+Research notes live in [docs/research-ledger.md](docs/research-ledger.md).
 
-Third-party skills and templates are not trusted automatically. Review,
-permission-bound, and adapt them before production use.
+## Public Safety
+
+Do not commit:
+
+- real member profiles;
+- contact lists;
+- raw voice or video;
+- private reflections;
+- private matching rationale;
+- API keys, tokens, cookies, `.env` files, or provider secrets.
+
+## Status
+
+This is a production-grade starter system: deterministic core, API runtime, tests, CI, plugin, agent templates, and deployment scaffolding. It is not yet a hosted SaaS or a live community platform.
+
+Next build: a human-gated pilot dashboard or a dry-run platform adapter.

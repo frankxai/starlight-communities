@@ -1,0 +1,18 @@
+id: member-memory
+name: Member Memory
+profiles:
+  - memory-agent
+  - community-steward
+steps:
+  - id: extract-profile-delta
+    profile: memory-agent
+    output: profile_delta
+  - id: classify-privacy
+    profile: memory-agent
+    output: privacy_class
+  - id: steward-review
+    profile: community-steward
+    output: memory_review
+gates:
+  - raw_voice_or_video_storage
+  - public_memory_export

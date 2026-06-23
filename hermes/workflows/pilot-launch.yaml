@@ -1,0 +1,23 @@
+id: pilot-launch
+name: Concierge Pilot Launch
+profiles:
+  - community-steward
+  - invitation-agent
+  - circle-architect
+  - quest-designer
+steps:
+  - id: define-member-promise
+    profile: community-steward
+    output: member_promise
+  - id: draft-invites
+    profile: invitation-agent
+    output: invite_drafts
+  - id: propose-cells
+    profile: circle-architect
+    output: proposed_cells
+  - id: create-week-one-quest
+    profile: quest-designer
+    output: quest_card
+gates:
+  - direct_message_send
+  - external_invite_send

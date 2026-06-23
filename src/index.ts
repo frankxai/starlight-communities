@@ -6,4 +6,6 @@ export * from "./memory.js";
 export * from "./quests.js";
 export * from "./run-sheet.js";
 export * from "./schemas.js";
+export * from "./server.js";
+export * from "./strategy.js";
 export * from "./util.js";

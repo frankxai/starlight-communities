@@ -1,0 +1,24 @@
+name: Pilot report
+description: Report what happened in a real or synthetic pilot week.
+title: "[Pilot]: "
+labels: ["pilot"]
+body:
+  - type: input
+    id: week
+    attributes:
+      label: Week id
+      placeholder: 2026-W27
+    validations:
+      required: true
+  - type: textarea
+    id: metrics
+    attributes:
+      label: Metrics
+      description: Commitment, proof, reflection, artifacts, helpfulness.
+    validations:
+      required: true
+  - type: textarea
+    id: learning
+    attributes:
+      label: Learning
+      description: What should the system remember or change?

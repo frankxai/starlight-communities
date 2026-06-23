@@ -37,9 +37,12 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "dev": "tsx src/server.ts",
+    "serve": "node dist/server.js",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "validate": "pnpm typecheck && pnpm test && node scripts/validate-manifest.mjs",
+    "validate": "pnpm typecheck && pnpm test && pnpm build && node scripts/validate-manifest.mjs && node scripts/validate-agent-assets.mjs",
+    "smoke:cli": "tsx src/cli.ts run-sheet examples/pilot-week.json",
     "start": "tsx src/cli.ts"
   },
   "dependencies": {

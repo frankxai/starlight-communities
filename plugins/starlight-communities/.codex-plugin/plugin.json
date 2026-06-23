@@ -1,0 +1,42 @@
+{
+  "name": "starlight-communities",
+  "version": "0.1.0",
+  "description": "Build, evaluate, and operate agentic creation-cell communities with Starlight Communities.",
+  "author": {
+    "name": "FrankXAI",
+    "url": "https://github.com/frankxai"
+  },
+  "homepage": "https://github.com/frankxai/starlight-communities",
+  "repository": "https://github.com/frankxai/starlight-communities",
+  "license": "MIT",
+  "keywords": [
+    "community",
+    "agents",
+    "starlight",
+    "openclaw",
+    "hermes",
+    "creator"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Starlight Communities",
+    "shortDescription": "Design and run agentic creation cells.",
+    "longDescription": "Starlight Communities helps Codex design, evaluate, and operate high-trust weekly creation cells with bounded agents, human gates, memory rules, and deployable local or Railway architecture.",
+    "developerName": "FrankXAI",
+    "category": "Productivity",
+    "capabilities": [
+      "Plan",
+      "Write",
+      "Analyze"
+    ],
+    "websiteURL": "https://github.com/frankxai/starlight-communities",
+    "defaultPrompt": [
+      "Design a Starlight creation-cell pilot.",
+      "Evaluate this community plan.",
+      "Draft a weekly cell run sheet."
+    ],
+    "brandColor": "#6D5DF7",
+    "composerIcon": "./assets/composer-icon.svg",
+    "logo": "./assets/logo.svg"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "memberPromise": "Ship one visible proof object per week with a small creation cell.",
+  "weeklyLoop": ["monday", "tuesday", "wednesday", "thursday", "friday", "weekend"],
+  "agents": [
+    "community_steward",
+    "circle_architect",
+    "quest_designer",
+    "invitation_agent",
+    "accountability_agent",
+    "artifact_agent",
+    "memory_agent"
+  ],
+  "gates": ["human_gate", "professional_advice_block"],
+  "metrics": ["commitment_rate", "proof_submission_rate", "reflection_completion_rate"],
+  "deployment": "local_api_then_railway"
+}

@@ -1,0 +1,32 @@
+id: weekly-creation-cell
+name: Weekly Creation Cell
+profiles:
+  - community-steward
+  - circle-architect
+  - quest-designer
+  - accountability-agent
+  - artifact-agent
+  - memory-agent
+steps:
+  - id: intake-review
+    profile: community-steward
+    output: steward_context
+  - id: cell-map
+    profile: circle-architect
+    output: proposed_cells
+  - id: quest-cards
+    profile: quest-designer
+    output: weekly_quests
+  - id: proof-loop
+    profile: accountability-agent
+    output: proof_requests
+  - id: artifact-package
+    profile: artifact-agent
+    output: artifact_drafts
+  - id: memory-capture
+    profile: memory-agent
+    output: memory_records
+gates:
+  - external_send
+  - public_publish
+  - raw_media_storage

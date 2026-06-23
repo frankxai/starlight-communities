@@ -1,0 +1,21 @@
+id: artifact-engine
+name: Artifact Engine
+profiles:
+  - artifact-agent
+  - memory-agent
+  - community-steward
+steps:
+  - id: gather-proof
+    profile: artifact-agent
+    output: proof_inventory
+  - id: package-artifact
+    profile: artifact-agent
+    output: artifact_draft
+  - id: capture-provenance
+    profile: memory-agent
+    output: provenance_record
+  - id: review-gate
+    profile: community-steward
+    output: approval_packet
+gates:
+  - public_artifact_publish

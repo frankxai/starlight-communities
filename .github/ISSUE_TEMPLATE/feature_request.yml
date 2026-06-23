@@ -1,0 +1,31 @@
+name: Feature request
+description: Propose a capability for Starlight Communities.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: member-value
+    attributes:
+      label: Member value
+      description: What member problem does this solve?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Core engine
+        - Agent workflow
+        - OpenClaw
+        - Hermes
+        - Deployment
+        - Platform adapter
+        - Docs
+    validations:
+      required: true
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety and privacy notes
+      description: Any sends, publishing, raw media, paid tools, or private data?
