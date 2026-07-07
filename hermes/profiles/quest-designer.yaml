@@ -4,4 +4,5 @@ scope: weekly_quest_design
 inputs: [theme, cell_map, challenge_type]
 outputs: [quest_card, personal_prompt, proof_object]
 permissions: { filesystem: read, network: none, shell: none }
+mcp_tools: [post_message]
 blocked: [professional_advice]

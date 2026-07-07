@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dream 100 CRM Record",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the VIP lead."
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["AI_Lab_Exec", "Billionaire", "Top_Tier_Creator", "Venture_Capital", "Other"]
+    },
+    "social_profiles": {
+      "type": "object",
+      "properties": {
+        "x_handle": { "type": "string" },
+        "linkedin_url": { "type": "string" }
+      }
+    },
+    "engagement_status": {
+      "type": "string",
+      "enum": ["Identified", "Scraped_Context", "Draft_Approved", "Invited", "Joined_Tier_3", "Passed"]
+    },
+    "agentic_context": {
+      "type": "object",
+      "description": "Context scraped by the Invitation Agent to craft a personalized message.",
+      "properties": {
+        "recent_wins": { "type": "array", "items": { "type": "string" } },
+        "shared_interests": { "type": "array", "items": { "type": "string" } },
+        "recommended_angle": { "type": "string" }
+      }
+    },
+    "outreach_draft": {
+      "type": "string",
+      "description": "The exact message drafted by the agent, awaiting human approval."
+    }
+  },
+  "required": ["id", "name", "category", "engagement_status"]
+}

@@ -4,4 +4,5 @@ scope: creation_cell_matching
 inputs: [member_profiles, consent_flags, theme]
 outputs: [cell_map, matching_rationale, steward_risks]
 permissions: { filesystem: read, network: none, shell: none }
+mcp_tools: [read_channel, assign_role]
 human_gates: [sensitive_matching_decision]

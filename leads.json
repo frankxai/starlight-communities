@@ -1,0 +1,202 @@
+[
+  {
+    "id": "lead_1",
+    "name": "Lex Fridman",
+    "role": "Host, Lex Fridman Podcast",
+    "category": "Top Creator",
+    "social": "twitter.com/lexfridman",
+    "interests": ["AI", "Robotics", "Philosophy"]
+  },
+  {
+    "id": "lead_2",
+    "name": "Sam Altman",
+    "role": "CEO, OpenAI",
+    "category": "AI Lab Exec",
+    "social": "twitter.com/sama",
+    "interests": ["AGI", "Startups", "Nuclear Energy"]
+  },
+  {
+    "id": "lead_3",
+    "name": "Andrej Karpathy",
+    "role": "AI Educator & Researcher",
+    "category": "Top Creator",
+    "social": "twitter.com/karpathy",
+    "interests": ["Neural Networks", "Education", "Open Source AI"]
+  },
+  {
+    "id": "lead_4",
+    "name": "Marques Brownlee",
+    "role": "Tech Reviewer & Creator",
+    "category": "Top Tech Creator",
+    "social": "twitter.com/MKBHD",
+    "interests": ["Consumer Tech", "Electric Vehicles", "Production Quality"]
+  },
+  {
+    "id": "lead_5",
+    "name": "Demis Hassabis",
+    "role": "CEO, Google DeepMind",
+    "category": "AI Lab Exec",
+    "social": "twitter.com/demishassabis",
+    "interests": ["AGI", "Computational Biology", "Neuroscience"]
+  },
+  {
+    "id": "lead_6",
+    "name": "Fei-Fei Li",
+    "role": "Co-Director, Stanford HAI",
+    "category": "AI Researcher",
+    "social": "twitter.com/drfeifei",
+    "interests": ["Computer Vision", "Human-Centered AI", "Education"]
+  },
+  {
+    "id": "lead_7",
+    "name": "Yann LeCun",
+    "role": "Chief AI Scientist, Meta",
+    "category": "AI Lab Exec",
+    "social": "twitter.com/ylecun",
+    "interests": ["Machine Learning", "Open Source AI", "Robotics"]
+  },
+  {
+    "id": "lead_8",
+    "name": "Ilya Sutskever",
+    "role": "Co-founder, SSI",
+    "category": "AI Lab Exec",
+    "social": "twitter.com/ilyasut",
+    "interests": ["Safe Superintelligence", "Deep Learning", "Alignment"]
+  },
+  {
+    "id": "lead_9",
+    "name": "Dario Amodei",
+    "role": "CEO, Anthropic",
+    "category": "AI Lab Exec",
+    "social": "linkedin.com/in/dario-amodei",
+    "interests": ["AI Safety", "Constitutional AI", "Scaling Laws"]
+  },
+  {
+    "id": "lead_10",
+    "name": "Mira Murati",
+    "role": "CTO, OpenAI",
+    "category": "AI Lab Exec",
+    "social": "twitter.com/miramurati",
+    "interests": ["Productizing AI", "Engineering", "Ethics"]
+  },
+  {
+    "id": "lead_11",
+    "name": "Jensen Huang",
+    "role": "CEO, NVIDIA",
+    "category": "Tech Exec",
+    "social": "linkedin.com/in/jenhsunhuang",
+    "interests": ["GPUs", "Accelerated Computing", "Digital Twins"]
+  },
+  {
+    "id": "lead_12",
+    "name": "Paul Graham",
+    "role": "Co-founder, Y Combinator",
+    "category": "Tech / VC",
+    "social": "twitter.com/paulg",
+    "interests": ["Startups", "Writing", "Programming"]
+  },
+  {
+    "id": "lead_13",
+    "name": "Melanie Perkins",
+    "role": "CEO & Co-founder, Canva",
+    "category": "Tech Exec",
+    "social": "twitter.com/melaniecanva",
+    "interests": ["Design", "Democratizing Tech", "Philanthropy"]
+  },
+  {
+    "id": "lead_14",
+    "name": "Brian Chesky",
+    "role": "CEO, Airbnb",
+    "category": "Tech Exec",
+    "social": "twitter.com/bchesky",
+    "interests": ["Design-Led Leadership", "Hospitality", "Company Culture"]
+  },
+  {
+    "id": "lead_15",
+    "name": "Jimmy Donaldson (MrBeast)",
+    "role": "Creator & Entrepreneur",
+    "category": "Top Creator",
+    "social": "twitter.com/MrBeast",
+    "interests": ["Virality", "Philanthropy", "Business Scaling"]
+  },
+  {
+    "id": "lead_16",
+    "name": "Ali Abdaal",
+    "role": "Productivity Creator & Author",
+    "category": "Top Creator",
+    "social": "twitter.com/AliAbdaal",
+    "interests": ["Productivity", "Creator Economy", "Medicine"]
+  },
+  {
+    "id": "lead_17",
+    "name": "Cleo Abram",
+    "role": "Science & Tech Creator",
+    "category": "Top Creator",
+    "social": "twitter.com/cleoabram",
+    "interests": ["Optimistic Tech", "Science Communication", "Video Essays"]
+  },
+  {
+    "id": "lead_18",
+    "name": "Justine Ezarik (iJustine)",
+    "role": "Tech Creator",
+    "category": "Top Tech Creator",
+    "social": "twitter.com/ijustine",
+    "interests": ["Consumer Tech", "Gaming", "Video Editing"]
+  },
+  {
+    "id": "lead_19",
+    "name": "Grace Beverley",
+    "role": "Founder (TALA) & Creator",
+    "category": "High-Value Founder",
+    "social": "instagram.com/gracebeverley",
+    "interests": ["Sustainable Fashion", "Fitness", "Entrepreneurship"]
+  },
+  {
+    "id": "lead_20",
+    "name": "Rachell Hofstetter (Valkyrae)",
+    "role": "Co-owner, 100 Thieves & Creator",
+    "category": "Gaming Creator",
+    "social": "twitter.com/Valkyrae",
+    "interests": ["Gaming", "Esports Business", "Lifestyle"]
+  },
+  {
+    "id": "lead_21",
+    "name": "Imane Anys (Pokimane)",
+    "role": "Gaming Creator & Founder",
+    "category": "Gaming Creator",
+    "social": "twitter.com/pokimanelol",
+    "interests": ["Streaming", "Content Creation", "Startups"]
+  },
+  {
+    "id": "lead_22",
+    "name": "Zack (Asmongold)",
+    "role": "Co-founder, OTK & Creator",
+    "category": "Gaming Creator",
+    "social": "twitter.com/Asmongold",
+    "interests": ["MMORPGs", "Streaming Business", "Commentary"]
+  },
+  {
+    "id": "lead_23",
+    "name": "Tyler Blevins (Ninja)",
+    "role": "Gaming Creator",
+    "category": "Gaming Creator",
+    "social": "twitter.com/Ninja",
+    "interests": ["Competitive Gaming", "Brand Building", "Esports"]
+  },
+  {
+    "id": "lead_24",
+    "name": "Hideo Kojima",
+    "role": "Game Director, Kojima Productions",
+    "category": "Gaming Industry Exec",
+    "social": "twitter.com/Kojima_Hideo",
+    "interests": ["Game Design", "Cinema", "Storytelling"]
+  },
+  {
+    "id": "lead_25",
+    "name": "Tim Sweeney",
+    "role": "CEO, Epic Games",
+    "category": "Gaming Industry Exec",
+    "social": "twitter.com/TimSweeneyEpic",
+    "interests": ["Game Engines", "Metaverse", "Open Ecosystems"]
+  }
+]

@@ -4,4 +4,5 @@ scope: private_safe_memory_capture
 inputs: [profile, reflection, commitment, artifact]
 outputs: [memory_record, profile_delta, provenance]
 permissions: { filesystem: read, network: none, shell: none }
+mcp_tools: [read_channel]
 human_gates: [raw_voice_or_video_storage, public_memory_export]

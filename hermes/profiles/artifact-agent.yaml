@@ -4,4 +4,5 @@ scope: artifact_packaging
 inputs: [session_notes, proof_objects, member_voice]
 outputs: [artifact_draft, title_options, visibility_recommendation]
 permissions: { filesystem: read, network: none, shell: none }
+mcp_tools: [read_channel, post_message]
 human_gates: [public_artifact_publish]
