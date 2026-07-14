@@ -31,3 +31,14 @@ Do not commit:
 - Hermes profiles are routing/synthesis contracts, not unchecked autonomous
   executors.
 - Agent Skills should stay small, navigable, and permission-scoped.
+
+<!-- STARLIGHT-REPO-CONTRACT:START -->
+## Starlight repository contract
+
+Contract: `starlight.repo_profile.v2` · Team: `communities-academies-team` · Priority: `now`
+- Work only in assigned paths and preserve unrelated dirty files.
+- Read `SYSTEM.md`, `SCHEMA.md`, and `SKILLS.md` before architectural changes.
+- Use the smallest 3–5 role team and an independent verifier for release-affecting work.
+- Required handoff: artifacts, checks, verifier verdict, risks, approvals, rollback, and next bounded action.
+- Human-gated actions: DNS, secrets, billing, spend, migrations, destructive operations, permissions, legal/IP, brand identity, external sends, and high-risk production changes.
+<!-- STARLIGHT-REPO-CONTRACT:END -->
