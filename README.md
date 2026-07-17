@@ -5,23 +5,33 @@
 [![Node](https://img.shields.io/badge/Node-%3E%3D20.11-0f766e.svg)](package.json)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-2563eb.svg)](tsconfig.json)
 
-Agentic community infrastructure for people building freedom systems, mind systems, content, events, and intelligent lives.
+A public-safe operating kit for community stewards who want small groups to create together every week.
 
-Starlight Communities turns a community from a passive chat room into a weekly creation-cell operating system:
+Starlight Communities replaces passive chat-room activity with a repeatable creation-cell loop:
 
 ```text
 3-5 people -> weekly quest -> pair spark -> creation lab -> proof -> reflection -> next commitment
 ```
 
-It gives community builders the thing most platforms do not: a repeatable system for helping members ship visible proof together.
+It helps 3-5 people turn a shared intention into visible proof and a clear next commitment.
 
-## Why It Exists
+## Purpose
 
 Most communities optimize for posts, messages, and events. Starlight Communities optimizes for identity, progress, recognition, belonging, and proof.
 
 The core bet:
 
 > The weekly ritual and member memory are the product. Circle, Discord, Slack, email, and web apps are surfaces.
+
+The project is deliberately platform-agnostic. It provides the ritual, contracts, safety boundaries, and deterministic tooling; community platforms remain optional delivery adapters.
+
+## How People Experience It
+
+A creation cell begins the week with one quest and a small commitment. Members use a short pair conversation to name likely blockers, meet for a focused creation lab, submit a proof object, and close the week with a reflection that becomes the next commitment. The useful outcome is not more messages: it is one visible artifact and one remembered next move.
+
+The fastest way to evaluate the system is to run the [concierge pilot kit](docs/pilot-kit.md) with 5-15 people before building an integration. It includes the intake questions, first-week quest, pair-spark agenda, Friday reflection, and a measurable week-one success criterion.
+
+Agents may draft run sheets, matches, prompts, follow-ups, artifacts, and memory deltas. Humans approve sensitive matching, external sends, publishing, calendar events, raw-media handling, and paid services.
 
 ## What You Can Build
 
@@ -54,6 +64,18 @@ flowchart LR
   L --> M[Invites, Publishing, Calendar, Raw Media, Paid Tools]
 ```
 
+## How Agents Explore It
+
+Agents should start with [`AGENTS.md`](AGENTS.md), then read the repository contracts in [`SYSTEM.md`](SYSTEM.md), [`SCHEMA.md`](SCHEMA.md), and [`SKILLS.md`](SKILLS.md). From there:
+
+1. Inspect `src/` and `test/` for the deterministic TypeScript core and its verification boundary.
+2. Use `skills/` for the seven permission-scoped community roles.
+3. Use `plugins/` for the repo-local Codex plugin and builder workflow.
+4. Use `openclaw/` and `hermes/` as bounded routing templates, not autonomous authority.
+5. Use only synthetic examples, preserve human approval gates, and run `pnpm validate` when dependencies are already installed.
+
+SIS-style memory is canonical. Circle, Discord, Slack, email, web apps, OpenClaw, Hermes, and Railway are surfaces or adapters; none should become an unreviewed source of truth.
+
 ## Agent Team
 
 ```mermaid
@@ -78,6 +100,8 @@ flowchart TB
 | Memory Agent | Profile deltas and memory records | Raw media consent |
 
 ## Quick Start
+
+For a human-first trial, start with [`docs/pilot-kit.md`](docs/pilot-kit.md). For the deterministic CLI and API:
 
 ```bash
 pnpm install
@@ -197,6 +221,14 @@ hermes/workflows/*.yaml
 
 These are intentionally permission-scoped. They are contracts for bounded agents, not unchecked automation.
 
+## Usefulness
+
+**Usable today:** a concierge pilot kit, deterministic creation-cell and run-sheet logic, synthetic examples, schemas, tests, a CLI and HTTP API, seven agent skills, a Codex plugin, and bounded OpenClaw/Hermes templates.
+
+**Deliberately not included yet:** a hosted SaaS, a live member-facing dashboard, production authentication or multi-tenancy, and live platform adapters. Adopters remain responsible for platform hardening, consent, identity, operations, and every external-action approval boundary.
+
+Clone this repo when you want to run or adapt one human-gated creation week. Wait for a hosted product if you need a turnkey community platform rather than an operating-system starter.
+
 ## Repository Map
 
 | Path | Purpose |
@@ -210,6 +242,10 @@ These are intentionally permission-scoped. They are contracts for bounded agents
 | `modules/` | Machine-readable module manifest |
 | `docs/` | Architecture, API, deployment, strategy, security, roadmap |
 | `examples/` | Synthetic pilot data only |
+| `SYSTEM.md`, `SCHEMA.md`, `SKILLS.md` | Agent-readable system, contract, and routing indexes |
+| `PRODUCT.md`, `GTM.md` | Product role, outcome, adoption, and evidence-led GTM boundaries |
+| `RUNBOOK.md`, `TESTING.md`, `SECURITY.md` | Operations, verification, and public-safety guidance |
+| `llms.txt` | Compact discovery map for AI tools |
 
 ## Design Principles
 
@@ -247,6 +283,6 @@ Do not commit:
 
 ## Status
 
-This is a production-grade starter system: deterministic core, API runtime, tests, CI, plugin, agent templates, and deployment scaffolding. It is not yet a hosted SaaS or a live community platform.
+This is a deterministic, tested starter system with an API runtime, CI, plugin, agent templates, and deployment scaffolding. It is not a hosted SaaS or a live community platform.
 
-Next build: a human-gated pilot dashboard or a dry-run platform adapter.
+Known limits: there is no production authentication or multi-tenancy, live adapters are not enabled by default, examples must remain synthetic, and external actions always require human approval. See the [roadmap](docs/roadmap.md) for the next bounded build: a human-gated pilot dashboard or a dry-run platform adapter.
