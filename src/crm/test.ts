@@ -1,4 +1,5 @@
-import { addLead, getLead, updateStatus, Dream100Lead } from './index';
+import { addLead, getLead, updateStatus } from './index.js';
+import type { Dream100Lead } from './index.js';
 
 async function runTest() {
     console.log('Testing CRM module...');
@@ -12,8 +13,9 @@ async function runTest() {
     try {
         console.log('Adding lead...');
         addLead(testLead);
-    } catch (e) {
-        console.log('Lead might already exist:', e.message);
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.log('Lead might already exist:', message);
     }
 
     console.log('Getting lead...');
