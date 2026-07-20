@@ -1,5 +1,17 @@
 import type { Client } from "@modelcontextprotocol/sdk/client/index.js";
 
+type TextToolContent = {
+  type: "text";
+  text: string;
+};
+
+function isTextToolContent(value: unknown): value is TextToolContent {
+  if (typeof value !== "object" || value === null) return false;
+
+  const candidate = value as { type?: unknown; text?: unknown };
+  return candidate.type === "text" && typeof candidate.text === "string";
+}
+
 export class CommunitySteward {
   constructor(private mcpClient: Client) {}
 
@@ -21,7 +33,10 @@ export class CommunitySteward {
       return;
     }
 
-    const messagesJson = readResult.content.find(c => c.type === 'text')?.text;
+    const resultContent: unknown[] = Array.isArray(readResult.content)
+      ? readResult.content
+      : [];
+    const messagesJson = resultContent.find(isTextToolContent)?.text;
     if (!messagesJson) {
       console.log("[Steward] No messages found.");
       return;
@@ -36,7 +51,7 @@ export class CommunitySteward {
         
         const welcomeMessage = `Welcome <@${msg.authorId}>! We're thrilled to have you here in Starlight Communities. Let us know if you need help with your initial quests!`;
         
-        console.log(`[Steward] Posting welcome message...`);
+        console.log("[Steward] Posting welcome message...");
         const postResult = await this.mcpClient.callTool({
           name: "post_message",
           arguments: {
