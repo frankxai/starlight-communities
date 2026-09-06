@@ -16,4 +16,15 @@ describe("generateWeeklyRunSheet", () => {
     expect(runSheet.gates.some((gate) => gate.tier === "human_gate")).toBe(true);
     expect(runSheet.memory_records.length).toBe(input.members.length);
   });
+
+  it("creates no cell commitments or memory for members without explicit consent", () => {
+    const input = PilotInputSchema.parse({
+      ...pilotWeek,
+      members: pilotWeek.members.map(({ consent_flags: _consent, ...member }) => member)
+    });
+    const runSheet = generateWeeklyRunSheet(input);
+    expect(runSheet.cells).toEqual([]);
+    expect(runSheet.commitments).toEqual([]);
+    expect(runSheet.memory_records).toEqual([]);
+  });
 });

@@ -30,9 +30,9 @@ export const WeekdaySchema = z.enum(["monday", "tuesday", "wednesday", "thursday
 export type Weekday = z.infer<typeof WeekdaySchema>;
 
 export const ConsentFlagsSchema = z.object({
-  allowCellMatching: z.boolean().default(true),
-  allowProfileMemory: z.boolean().default(true),
-  allowAsyncProofSummary: z.boolean().default(true),
+  allowCellMatching: z.boolean().default(false),
+  allowProfileMemory: z.boolean().default(false),
+  allowAsyncProofSummary: z.boolean().default(false),
   allowRawMediaStorage: z.boolean().default(false),
   allowPublicRecognition: z.boolean().default(false),
   allowPlatformSync: z.boolean().default(false)
@@ -58,9 +58,9 @@ export const CommunityMemberProfileSchema = z.object({
   growth_edge: z.string().min(1).optional(),
   channels: z.array(ChannelSchema).default([]),
   consent_flags: ConsentFlagsSchema.default({
-    allowCellMatching: true,
-    allowProfileMemory: true,
-    allowAsyncProofSummary: true,
+    allowCellMatching: false,
+    allowProfileMemory: false,
+    allowAsyncProofSummary: false,
     allowRawMediaStorage: false,
     allowPublicRecognition: false,
     allowPlatformSync: false

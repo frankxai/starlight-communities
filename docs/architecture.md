@@ -47,11 +47,35 @@ and prepare bounded outputs. External side effects require human approval.
 
 ## Production Boundary
 
-The package is production-grade as a deterministic core and agent kit. It is not
-yet a hosted SaaS. Production deployment should add:
+The package is a deterministic reference core and agent kit. Source tests do not
+establish production authentication or a hosted service. Production use requires:
 
 - authenticated member profiles;
 - encrypted private memory storage;
 - audit logs for agent proposals and human approvals;
 - platform adapters with dry-run mode;
 - consent UI for raw media, recognition, and public artifacts.
+
+## Consent and memory
+
+All consent flags default to false, including matching, profile memory and proof
+summaries. Omitted or partial consent never grants an unmentioned permission.
+The synthetic pilot explicitly opts its fictional members into matching and memory;
+adopters must collect real choices rather than copy those fixture values.
+
+The host must supply current authenticated member records. The library validates
+their shape and gates behavior, but cannot prove who supplied them. Never treat an
+inbound message, reflection or agent assertion as authenticated consent.
+
+`createProfileMemoryRecord(member, week)` rejects missing or withdrawn memory consent.
+`createReflectionMemoryRecord(reflection, member)` now requires the current member
+record, matching member identity, and both profile-memory and proof-summary consent.
+Existing one-argument reflection calls must be migrated; they now fail closed.
+Derived memory stays private even when a reflection was labeled public. Public
+recognition is a separate, human-reviewed projection, not a memory export switch.
+
+Run sheets omit profile-memory records for members who did not opt in. These checks
+apply to each new generation. They do not delete previously stored copies; adapters
+must enforce withdrawal and deletion in their own durable storage. SIS owns the
+shared event protocol; this package owns the steward workflow and does not duplicate
+the SIS ledger or claim a working SIS adapter.

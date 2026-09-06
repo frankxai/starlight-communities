@@ -31,6 +31,10 @@
 
 ## 0.4: Memory And Evals
 
+Implemented source boundary: explicit opt-in defaults, current-member checks on
+direct memory generation, and private reflection memory. This is not a durable
+consent store, authenticated adapter, or deletion workflow.
+
 - SIS memory-provider integration.
 - Consent ledger.
 - Quality evals for quests, nudges, artifacts, and reflections.

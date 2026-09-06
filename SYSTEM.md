@@ -6,7 +6,7 @@
 Contract: `starlight.repo_profile.v2` · Team: `communities-academies-team` · Priority: `now`
 ### Purpose
 
-Open community operating system and paid facilitation wrapper.
+Self-service community operating kit with member-owned data and explicit consent.
 
 ### Runtime boundary
 

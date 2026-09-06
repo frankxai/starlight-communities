@@ -9,7 +9,7 @@ describe("schemas", () => {
     expect(parsed.challenge_type).toBe("ai_companion");
   });
 
-  it("defaults consent flags conservatively for raw media and public recognition", () => {
+  it("does not infer any consent from an omitted consent record", () => {
     const parsed = CommunityMemberProfileSchema.parse({
       member_id: "test",
       display_name: "Test",
@@ -18,8 +18,16 @@ describe("schemas", () => {
       skills: []
     });
 
+    expect(Object.values(parsed.consent_flags).every((value) => value === false)).toBe(true);
+  });
+
+  it("grants only explicitly supplied flags in a partial consent record", () => {
+    const parsed = CommunityMemberProfileSchema.parse({
+      member_id: "test", display_name: "Test", timezone: "UTC", goals: ["ship"],
+      consent_flags: { allowCellMatching: true }
+    });
     expect(parsed.consent_flags.allowCellMatching).toBe(true);
-    expect(parsed.consent_flags.allowRawMediaStorage).toBe(false);
-    expect(parsed.consent_flags.allowPublicRecognition).toBe(false);
+    expect(parsed.consent_flags.allowProfileMemory).toBe(false);
+    expect(parsed.consent_flags.allowAsyncProofSummary).toBe(false);
   });
 });
