@@ -79,3 +79,19 @@ apply to each new generation. They do not delete previously stored copies; adapt
 must enforce withdrawal and deletion in their own durable storage. SIS owns the
 shared event protocol; this package owns the steward workflow and does not duplicate
 the SIS ledger or claim a working SIS adapter.
+
+## Contributor assurance
+
+CI uses immutable action commit revisions, a read-only repository token, no stored
+checkout credentials, a 15-minute timeout, and cancellation of superseded runs.
+Weekly Dependabot proposals cover Actions and package dependencies; compatible
+minor/patch package updates are grouped. Updates still require review and checks.
+This follows [GitHub's secure-use guidance](https://docs.github.com/en/actions/reference/security/secure-use),
+checked September 7, 2026. These controls are not a security certification.
+
+The next transport upgrade should evaluate
+[MCP 2026-07-28](https://blog.modelcontextprotocol.io/posts/2026-07-28/): stateless
+requests, cacheable discovery, issuer-bound authorization and the Tasks extension.
+Upgrade only with a client/server compatibility fixture and cancellation/replay
+tests. The current dependency declaration does not prove support for that revision;
+this change does not install a new MCP runtime or expose a member-data service.
