@@ -10,6 +10,7 @@ Use this skill to turn community ideas into a production-grade Starlight Communi
 ## Workflow
 
 1. Classify the request:
+   - `host-programme`: use sibling `host-programme-operations/SKILL.md` for venue, costs, responsibilities and contract-review preparation.
    - `strategy`: member promise, business value, rituals, metrics.
    - `pilot`: 3-5 person cell map, quest, proof, reflection, run sheet.
    - `agent-system`: OpenClaw/Hermes profiles, agent gates, workflows.

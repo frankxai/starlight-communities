@@ -19,3 +19,10 @@ Contract: `starlight.repo_profile.v2` · Team: `communities-academies-team` · P
 
 Product-owned schemas and migrations remain in this repository. Cross-estate contracts are adapters, not a shared database. PII is prohibited in product analytics events.
 <!-- STARLIGHT-REPO-CONTRACT:END -->
+
+## Host programme planning
+
+`src/host-programme.ts` defines strict `host-programme.v1` input and draft
+`host-assessment.v1` output. Separate venue and programme records use reference IDs,
+not member/clinical records. See `docs/host-programme-architecture.md` for money,
+room-capacity and evidence limitations. No change to creation-cell membership.
