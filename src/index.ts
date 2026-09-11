@@ -9,3 +9,4 @@ export * from "./schemas.js";
 export * from "./server.js";
 export * from "./strategy.js";
 export * from "./util.js";
+export * from "./host-programme.js";

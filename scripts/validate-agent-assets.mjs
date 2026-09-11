@@ -8,6 +8,9 @@ const requiredPaths = [
   "plugins/starlight-communities/.codex-plugin/plugin.json",
   "plugins/starlight-communities/skills/starlight-communities-builder/SKILL.md",
   "plugins/starlight-communities/skills/starlight-communities-builder/agents/openai.yaml",
+  "plugins/starlight-communities/skills/host-programme-operations/SKILL.md",
+  "plugins/starlight-communities/skills/host-programme-operations/references/host-contract-worksheet.md",
+  "examples/host-programme.json",
   "openclaw/REGISTRY.md",
   "hermes/CLAW.md"
 ];
