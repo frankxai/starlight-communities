@@ -36,3 +36,9 @@ external_actions: human_gate
 - Private member data must not appear in public summaries.
 - Memory writes are proposed, not executed, unless the deployment explicitly
   grants that authority.
+
+## Host programme routing
+
+Route venue/cost/producer planning to the local `assess-programme` command and
+`host-programme-operations` skill. Results remain drafts; no bookings, payment,
+contract execution, invitations or publication. See `docs/host-programme-architecture.md`.

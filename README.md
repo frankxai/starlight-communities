@@ -286,3 +286,10 @@ Do not commit:
 This is a deterministic, tested starter system with an API runtime, CI, plugin, agent templates, and deployment scaffolding. It is not a hosted SaaS or a live community platform.
 
 Known limits: there is no production authentication or multi-tenancy, live adapters are not enabled by default, examples must remain synthetic, and external actions always require human approval. See the [roadmap](docs/roadmap.md) for the next bounded build: a human-gated pilot dashboard or a dry-run platform adapter.
+
+## Host programme planning
+
+The local `assess-programme` CLI checks synthetic venue/programme economics, capacity,
+responsibilities and media-review inputs. It never books, sends or verifies contracts.
+See [architecture and usage](docs/host-programme-architecture.md). The complementary
+Codex skill is `host-programme-operations` in the existing repository plugin.

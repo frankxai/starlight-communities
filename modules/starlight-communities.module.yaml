@@ -6,6 +6,7 @@ canonical_package: "@starlight/communities"
 summary: Agentic creation cells for people building freedom systems, mind systems, content, events, and intelligent lives.
 runtime:
   cli: starlight-communities run-sheet examples/pilot-week.json
+  host_planner_cli: starlight-communities assess-programme examples/host-programme.json
   local_api: pnpm dev
   healthcheck: GET /health
   routes:
@@ -75,6 +76,8 @@ objects:
   - Reflection
   - ActionGate
   - MemoryRecord
+  - HostProgrammeInput
+  - HostProgrammeAssessment
 
 gates:
   human_required:
@@ -138,6 +141,7 @@ codex_plugin:
   marketplace: .agents/plugins/marketplace.json
   skills:
     - plugins/starlight-communities/skills/starlight-communities-builder/SKILL.md
+    - plugins/starlight-communities/skills/host-programme-operations/SKILL.md
 
 metrics:
   activation:
