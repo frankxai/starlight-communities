@@ -35,6 +35,8 @@ Agents may draft run sheets, matches, prompts, follow-ups, artifacts, and memory
 
 ## What You Can Build
 
+Try the [Creation Atlas concept](examples/creation-atlas.html) as a local, dependency-free HTML preview. Its quests and artifact cards are synthetic; it does not collect member data or represent an active community.
+
 - A 5-15 person concierge pilot.
 - A creator cohort with weekly artifacts.
 - A founder circle that ships proof every Friday.
