@@ -1,7 +1,7 @@
 {
   "name": "starlight-communities",
-  "version": "0.1.0",
-  "description": "Build, evaluate, and operate agentic creation-cell communities with Starlight Communities.",
+  "version": "0.1.0+codex.20260909165547",
+  "description": "Build creation-cell communities and prepare host programme feasibility with explicit human review.",
   "author": {
     "name": "FrankXAI",
     "url": "https://github.com/frankxai"
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Starlight Communities",
     "shortDescription": "Design and run agentic creation cells.",
-    "longDescription": "Starlight Communities helps Codex design, evaluate, and operate high-trust weekly creation cells with bounded agents, human gates, memory rules, and deployable local or Railway architecture.",
+    "longDescription": "Starlight Communities helps Codex design, evaluate, and operate high-trust weekly creation cells with bounded agents, human gates, memory rules, and deployable local or Railway architecture. Includes local host programme capacity, economics, responsibility and media-review planning; no booking or payment execution.",
     "developerName": "FrankXAI",
     "category": "Productivity",
     "capabilities": [
@@ -33,7 +33,8 @@
     "defaultPrompt": [
       "Design a Starlight creation-cell pilot.",
       "Evaluate this community plan.",
-      "Draft a weekly cell run sheet."
+      "Draft a weekly cell run sheet.",
+      "Assess a host programme plan before committing dates or money."
     ],
     "brandColor": "#6D5DF7",
     "composerIcon": "./assets/composer-icon.svg",

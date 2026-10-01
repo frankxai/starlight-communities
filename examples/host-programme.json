@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "host-programme.v1",
+  "programmeId": "synthetic-team-lab-01",
+  "evidenceStatus": "synthetic",
+  "venue": {
+    "id": "synthetic-day-space-de",
+    "countryCode": "DE",
+    "use": "day_space",
+    "attendeeCapacity": 14,
+    "privateBedrooms": 0,
+    "controlBasis": "unknown"
+  },
+  "attendance": {"payingParticipants": 10, "complimentaryParticipants": 0, "staff": 2, "nights": 0},
+  "responsibilities": {"propertyOwnerRef": "owner-role", "programmeOperatorRef": "operator-role", "producerRef": "producer-role", "facilitatorRef": "facilitator-role"},
+  "agreements": {},
+  "economics": {
+    "currency": "EUR",
+    "basis": "net_of_tax",
+    "perspective": "programme_operator",
+    "feePerPayingParticipantMinor": 100000,
+    "propertyFeeMinor": 100000,
+    "fixedDeliveryCostMinor": 120000,
+    "costPerAttendeeMinor": 10000,
+    "operatorMinutes": 1200,
+    "operatorHourlyCostMinor": 10000,
+    "contingencyMinor": 40000,
+    "cashCollectedMinor": 200000,
+    "refundReserveMinor": 50000,
+    "paymentsDueBeforeNextCollectionMinor": 250000
+  },
+  "content": [{"id": "synthetic-demo", "kind": "facilitator_demo"}]
+}

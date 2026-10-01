@@ -30,3 +30,9 @@ before runtime use.
 
 OpenClaw can be a channel gateway. It must not become the source of truth.
 Canonical community objects stay in the Starlight Communities data model.
+
+## Host programme routing
+
+Existing community stewardship may prepare a host feasibility draft via the local
+`assess-programme` CLI. Use the `host-programme-operations` Codex skill and
+`docs/host-programme-architecture.md`; no new network tool or write permission.
