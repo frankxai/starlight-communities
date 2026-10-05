@@ -13,7 +13,7 @@
     "url": "https://github.com/frankxai/starlight-communities/issues"
   },
   "engines": {
-    "node": ">=20.11"
+    "node": ">=22"
   },
   "bin": {
     "starlight-communities": "./dist/cli.js"
