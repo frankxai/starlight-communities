@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/// <reference types="node" />
 import { readFile } from "node:fs/promises";
 import { generateWeeklyRunSheet } from "./run-sheet.js";
 import { PilotInputSchema } from "./schemas.js";

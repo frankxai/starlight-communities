@@ -1,3 +1,4 @@
+/// <reference types="node" />
 /**
  * CRM module for Starlight Dream 100
  * Manages lead database interactions via AgentDB (SQLite).

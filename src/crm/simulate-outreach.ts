@@ -1,3 +1,4 @@
+/// <reference types="node" />
 /**
  * Outreach Simulation Module
  * Simulates generating contextual outreach drafts for leads.
