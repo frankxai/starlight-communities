@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "original_account": {
+      "type": "string",
+      "maxLength": 8000
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "contributor_alias": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "de",
+        "en",
+        "nl",
+        "other"
+      ]
+    },
+    "topic": {
+      "type": "string",
+      "enum": [
+        "gardening",
+        "household-memory"
+      ]
+    },
+    "crop": {
+      "type": "string",
+      "maxLength": 150
+    },
+    "region": {
+      "type": "string",
+      "maxLength": 150
+    },
+    "season": {
+      "type": "string",
+      "maxLength": 150
+    },
+    "conditions": {
+      "type": "string",
+      "maxLength": 1200
+    },
+    "method": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "outcome": {
+      "type": "string",
+      "maxLength": 1500
+    },
+    "uncertainty": {
+      "type": "string",
+      "maxLength": 1000
+    },
+    "source_kind": {
+      "type": "string",
+      "enum": [
+        "firsthand",
+        "family-recollection",
+        "documented-observation"
+      ]
+    },
+    "reviewed_by_contributor": {
+      "const": true,
+      "type": "boolean"
+    },
+    "consent": {
+      "type": "object",
+      "properties": {
+        "storage": {
+          "const": true,
+          "type": "boolean"
+        },
+        "export_to_family": {
+          "type": "boolean"
+        },
+        "attribution": {
+          "type": "string",
+          "enum": [
+            "alias",
+            "anonymous"
+          ]
+        }
+      },
+      "required": [
+        "storage",
+        "export_to_family",
+        "attribution"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "title",
+    "original_account",
+    "summary",
+    "contributor_alias",
+    "language",
+    "topic",
+    "source_kind",
+    "reviewed_by_contributor",
+    "consent"
+  ],
+  "additionalProperties": false
+}

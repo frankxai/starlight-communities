@@ -1,0 +1,25 @@
+name: Garden Intelligence checks
+on:
+  pull_request:
+    paths:
+      - 'modules/garden-intelligence/**'
+      - '.github/workflows/garden-intelligence.yml'
+  push:
+    branches: [main]
+    paths: ['modules/garden-intelligence/**']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: modules/garden-intelligence
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test test/*.test.mjs
+      - run: bash scripts/build.sh
+      - run: node scripts/validate-artifact.mjs

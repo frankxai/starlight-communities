@@ -1,0 +1,15 @@
+{
+  "title": "Synthetic seedling memory",
+  "original_account": "Synthetic example: I watched two seedlings grow. I do not remember the year.",
+  "summary": "A synthetic account used only for testing.",
+  "contributor_alias": "Example gardener",
+  "language": "en",
+  "topic": "gardening",
+  "source_kind": "family-recollection",
+  "reviewed_by_contributor": true,
+  "consent": {
+    "storage": true,
+    "export_to_family": true,
+    "attribution": "anonymous"
+  }
+}
