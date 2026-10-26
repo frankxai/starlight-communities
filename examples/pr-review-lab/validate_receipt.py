@@ -19,12 +19,12 @@ def validate(dataset_bytes, receipt):
     if receipt.get("track") not in ("human", "human_plus_agent", "agent_plus_human_review"):
         errors.append("unsupported track")
     for key in ("harness", "model"):
-        if receipt.get(key) is not None and (not isinstance(receipt[key], str) or not receipt[key].strip()):
+        if key not in receipt or (receipt[key] is not None and (not isinstance(receipt[key], str) or not receipt[key].strip())):
             errors.append(f"{key} must be a nonempty string or null")
     for key in ("elapsed_seconds", "human_minutes", "cost_eur"):
         value = receipt.get(key)
-        if value is not None and (isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0):
-            errors.append(f"{key} must be a finite nonnegative number or null")
+        if key not in receipt or (value is not None and (isinstance(value, bool) or not isinstance(value, (int, float)) or (isinstance(value, float) and not math.isfinite(value)) or not 0 <= value <= 1_000_000_000_000)):
+            errors.append(f"{key} must be a finite number between 0 and 1e12 or null")
     reviews = receipt.get("reviews")
     if not isinstance(reviews, list):
         return errors + ["reviews must be a list"]
@@ -44,7 +44,7 @@ def validate(dataset_bytes, receipt):
         case = by_id[case_id]
         if review.get("decision") not in ("block", "no_block"):
             errors.append(f"{case_id}: invalid decision")
-        if review.get("file") != case["file"] or str(review.get("line")) not in case["lines"] or isinstance(review.get("line"), bool):
+        if review.get("file") != case["file"] or type(review.get("line")) is not int or str(review["line"]) not in case["lines"]:
             errors.append(f"{case_id}: citation not in case")
         if not isinstance(review.get("rationale"), str) or not review["rationale"].strip():
             errors.append(f"{case_id}: rationale required")
