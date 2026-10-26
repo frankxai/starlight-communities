@@ -1,0 +1,33 @@
+{
+  "dataset_id": "pr-review-practice-v0",
+  "dataset_sha256": "3d9e8a1002593e78c8fde03ecc24720b29a800aa0f89b0ec5c2ba11f49d1ff1b",
+  "track": "human_plus_agent",
+  "harness": null,
+  "model": null,
+  "elapsed_seconds": null,
+  "human_minutes": null,
+  "cost_eur": null,
+  "reviews": [
+    {
+      "case_id": "authorization-regression",
+      "decision": "block",
+      "file": "app/reports.js",
+      "line": 13,
+      "rationale": "Synthetic example; no actual run is claimed."
+    },
+    {
+      "case_id": "retry-double-charge",
+      "decision": "block",
+      "file": "app/checkout.js",
+      "line": 22,
+      "rationale": "Synthetic example; no actual run is claimed."
+    },
+    {
+      "case_id": "safe-escaping-control",
+      "decision": "no_block",
+      "file": "app/greeting.jsx",
+      "line": 31,
+      "rationale": "Synthetic example; no actual run is claimed."
+    }
+  ]
+}
