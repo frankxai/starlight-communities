@@ -13,8 +13,10 @@ Three explicitly synthetic snippets help a small group practise evidence-bound r
 
 Receipts identify the task file by SHA-256, and each cited file and line must appear in the case. A citation proves only that the line exists; it does not establish that a reported review happened or that a rationale is true. The example is synthetic and does not claim a completed run. Model, harness, time, cost and human work are self-reported and may be unknown; never submit secrets, private prompts, contact details or real source code.
 
+The `harness`, `model`, `elapsed_seconds`, `human_minutes`, and `cost_eur` fields are required; use `null` when unknown. Durations and cost are finite numbers from 0 to 1e12, inclusive. The citation `line` must be a JSON integer present in the cited case, not a string or boolean. These limits are input validation for the practice exercise, not attestations or spending controls.
+
 For a future public competition, first add a separate versioned ruleset, actual licensed or synthetic PR revisions, a hidden holdout, an independently reviewed rubric and baseline, consent, correction/appeal rights, clear identity and duplicate-entry policy, and a publication review. No ranking or verification claim follows from this exercise.
 
 ## Validate the exercise itself
 
-Run `python3 -m unittest -v test_validate_receipt.py` in this directory. The test uses in-memory receipts and covers valid input, stale task digest, duplicate/missing cases, bad citations and invalid costs. No dependency or account is required.
+Run `python3 -m unittest -v test_validate_receipt.py` in this directory. The test uses in-memory receipts and covers valid input, stale task digest, duplicate/missing cases, bad citations, huge numbers and invalid costs. No dependency or account is required.
