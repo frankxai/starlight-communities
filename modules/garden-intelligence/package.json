@@ -1,0 +1,1 @@
+{"name":"garden-intelligence","version":"0.1.0","private":true,"type":"module","scripts":{"test":"node --test test/*.test.mjs","build":"bash scripts/build.sh","validate":"node scripts/validate-artifact.mjs","dev":"node scripts/preview.mjs"}}

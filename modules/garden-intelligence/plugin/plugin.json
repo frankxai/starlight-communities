@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "garden-intelligence",
+  "version": "0.1.0",
+  "description": "Preserve contributor-reviewed garden memories and design contextual, low-risk gardening observations.",
+  "keywords": [
+    "gardening",
+    "family",
+    "oral-history",
+    "community"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Garden Intelligence",
+        "shortDescription": "Preserve family garden wisdom",
+        "brandColor": "#345C43",
+        "logo": "./assets/icon.svg"
+      }
+    }
+  }
+}

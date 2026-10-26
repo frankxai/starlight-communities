@@ -1,0 +1,30 @@
+[
+  {
+    "case": "missing-manifest",
+    "rejected": true
+  },
+  {
+    "case": "identity-drift",
+    "rejected": true
+  },
+  {
+    "case": "bad-frontmatter",
+    "rejected": true
+  },
+  {
+    "case": "bad-transport",
+    "rejected": true
+  },
+  {
+    "case": "public-app-binding",
+    "rejected": true
+  },
+  {
+    "case": "symlink",
+    "rejected": true
+  },
+  {
+    "case": "traversal",
+    "rejected": true
+  }
+]
