@@ -35,6 +35,19 @@ class ReceiptTests(unittest.TestCase):
         self.receipt["elapsed_seconds"] = True
         self.assertEqual(len(validate(self.raw, self.receipt)), 2)
 
+    def test_huge_integer_rejected_without_crashing(self):
+        self.receipt["cost_eur"] = 10 ** 400
+        self.assertTrue(any("cost_eur" in e for e in validate(self.raw, self.receipt)))
+
+    def test_required_nullable_fields_and_integer_citation(self):
+        del self.receipt["model"]
+        del self.receipt["human_minutes"]
+        self.receipt["reviews"][0]["line"] = "13"
+        errors = validate(self.raw, self.receipt)
+        self.assertTrue(any("model" in e for e in errors))
+        self.assertTrue(any("human_minutes" in e for e in errors))
+        self.assertTrue(any("citation" in e for e in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
