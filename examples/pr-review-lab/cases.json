@@ -1,0 +1,31 @@
+{
+  "id": "pr-review-practice-v0",
+  "version": "0.1.0",
+  "kind": "synthetic-open-practice",
+  "cases": [
+    {
+      "id": "authorization-regression",
+      "title": "Shared project report endpoint",
+      "file": "app/reports.js",
+      "lines": {"10": "export async function getReport(request, reportId) {", "11": "  const user = await authenticate(request);", "12": "  const report = await db.reports.findById(reportId);", "13": "  return Response.json(report);", "14": "}"},
+      "prompt": "The route authenticates the requester. Identify the access-control risk and cite the line that returns data.",
+      "reference": {"decision": "block", "anchor": 13, "rationale": "Any authenticated user can request another tenant's report: the return is not gated by report ownership or tenant membership."}
+    },
+    {
+      "id": "retry-double-charge",
+      "title": "Retrying a payment request",
+      "file": "app/checkout.js",
+      "lines": {"20": "export async function chargeWithRetry(client, order) {", "21": "  try { return await client.charge(order); }", "22": "  catch (error) { return await client.charge(order); }", "23": "}"},
+      "prompt": "The charge request can time out after the provider accepts it. Identify the failure mode and cite the retry line.",
+      "reference": {"decision": "block", "anchor": 22, "rationale": "A blind retry without a stable idempotency key or reconciliation may charge the same order twice."}
+    },
+    {
+      "id": "safe-escaping-control",
+      "title": "Render a user label",
+      "file": "app/greeting.jsx",
+      "lines": {"30": "export function Greeting({ name }) {", "31": "  return <p>Hello, {name}</p>;", "32": "}"},
+      "prompt": "Assume standard React text rendering and no other code. Decide whether this snippet alone shows an HTML injection vulnerability.",
+      "reference": {"decision": "no_block", "anchor": 31, "rationale": "React renders the interpolated value as text by default; this snippet alone does not use an HTML injection API."}
+    }
+  ]
+}
