@@ -17,4 +17,4 @@ For a future public competition, first add a separate versioned ruleset, actual 
 
 ## Validate the exercise itself
 
-Run `python3 -m unittest -v test_validate_receipt.py` in this directory. The test uses temporary files and covers valid input, stale task digest, duplicate/missing cases, bad citations and invalid costs. No dependency or account is required.
+Run `python3 -m unittest -v test_validate_receipt.py` in this directory. The test uses in-memory receipts and covers valid input, stale task digest, duplicate/missing cases, bad citations and invalid costs. No dependency or account is required.
