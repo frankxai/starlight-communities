@@ -70,12 +70,11 @@ try {
 /**
  * Helper to convert a DB note row to a Dream100Lead
  */
-function rowToLead(row: unknown): Dream100Lead {
-    const r = row as { id: string | number; title: string; metadata?: string };
-    const meta = JSON.parse(r.metadata || '{}');
+function rowToLead(row: any): Dream100Lead {
+    const meta = JSON.parse(row.metadata || '{}');
     return {
-        id: meta.id || r.id.toString(),
-        name: r.title,
+        id: meta.id || row.id.toString(),
+        name: row.title,
         category: meta.category || 'Other',
         social_profiles: meta.social_profiles,
         engagement_status: meta.engagement_status || 'Identified',
@@ -162,8 +161,7 @@ export function updateStatus(id: string, newStatus: EngagementStatus): Dream100L
             UPDATE notes SET metadata = ?, updated_at = strftime('%s', 'now')
             WHERE id = ?
         `);
-        const r = row as { id: string | number };
-        updateStmt.run(JSON.stringify(lead), r.id);
+        updateStmt.run(JSON.stringify(lead), (row as any).id);
         
         emitTelemetry(`Updated status for ${id} to ${newStatus} in AgentDB`, 'info');
         return lead;
