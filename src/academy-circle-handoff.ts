@@ -56,7 +56,8 @@ export type AcademyHandoffErrorCode =
   | "CIRCLE_DRAFT_OVERWRITE_BLOCKED"
   | "INLINE_CREDENTIAL_BLOCKED"
   | "PRIVATE_REPO_URL_BLOCKED"
-  | "ACT_WEEK_MISMATCH";
+  | "ACT_WEEK_MISMATCH"
+  | "NON_MONDAY_START_DATE";
 
 export class AcademyHandoffSafetyError extends Error {
   readonly code: AcademyHandoffErrorCode;
@@ -591,7 +592,7 @@ const FORBIDDEN_CREDENTIAL_PATTERNS: readonly RegExp[] = [
   /\bghp_[a-zA-Z0-9]{20,}\b/,
   /\bgithub_pat_[a-zA-Z0-9_]{20,}\b/,
   /\bBearer\s+[A-Za-z0-9._-]{12,}\b/i,
-  /\bcircle_api_token\s*[:=]\s*["']?[A-Za-z0-9._-]{8,}/i
+  /\bcircle_api_token\s*[:=]\s*\\?["']?[A-Za-z0-9._-]{8,}/i
 ];
 
 export const PRIVATE_ESTATE_REPO_SLUGS = [
@@ -603,6 +604,43 @@ export const PRIVATE_ESTATE_REPO_SLUGS = [
   "affiliate-agent-skills",
   "claude-code-config"
 ] as const;
+
+function collectDecodedStringValues(root: unknown): string[] {
+  const strings: string[] = [];
+  const stack: unknown[] = [root];
+  const seen = new Set<object>();
+
+  while (stack.length > 0) {
+    const current = stack.pop();
+    if (typeof current === "string") {
+      strings.push(current);
+      continue;
+    }
+    if (current === null || typeof current !== "object") {
+      continue;
+    }
+    if (seen.has(current)) {
+      continue;
+    }
+    seen.add(current);
+
+    if (Array.isArray(current)) {
+      for (let i = current.length - 1; i >= 0; i -= 1) {
+        stack.push(current[i]);
+      }
+      continue;
+    }
+
+    const entries = Object.entries(current as Record<string, unknown>);
+    for (let i = entries.length - 1; i >= 0; i -= 1) {
+      const [key, value] = entries[i];
+      strings.push(key);
+      stack.push(value);
+    }
+  }
+
+  return strings;
+}
 
 function assertNoSecretsOrPrivateUrls(rawPayloadText: string, apiToken?: string): void {
   if (apiToken !== undefined && apiToken.trim().length > 0) {
@@ -937,8 +975,12 @@ function buildDraftPosts(
 
 export function compileAcademyCircleHandoff(rawInput: AcademyCohortWeekInput): AcademyCircleHandoffPlan {
   const serializedRaw = JSON.stringify(rawInput);
-  const input = AcademyCohortWeekInputSchema.parse(rawInput);
+  assertNoSecretsOrPrivateUrls(serializedRaw);
+  for (const decoded of collectDecodedStringValues(rawInput)) {
+    assertNoSecretsOrPrivateUrls(decoded);
+  }
 
+  const input = AcademyCohortWeekInputSchema.parse(rawInput);
   assertNoSecretsOrPrivateUrls(serializedRaw, input.execution_mode.api_token);
   const verifiedReceipt = assertFailClosedExecutionPosture(input.execution_mode, input.approval_receipt);
 
@@ -1070,6 +1112,19 @@ export function compileAcademyCircleHandoff(rawInput: AcademyCohortWeekInput): A
     perturbationPrompt,
     receipt_id: verifiedReceipt.receipt_id
   };
+
+  for (const post of draftPosts) {
+    assertNoSecretsOrPrivateUrls(post.title);
+    assertNoSecretsOrPrivateUrls(post.markdown_body);
+    assertNoSecretsOrPrivateUrls(post.expected_member_output);
+  }
+  for (const event of draftEvents) {
+    assertNoSecretsOrPrivateUrls(event.title);
+    assertNoSecretsOrPrivateUrls(event.exit_artifact);
+    for (const agendaItem of event.agenda) {
+      assertNoSecretsOrPrivateUrls(agendaItem);
+    }
+  }
 
   return AcademyCircleHandoffPlanSchema.parse({
     schema_version: ACADEMY_HANDOFF_SCHEMA_VERSION,
@@ -1273,6 +1328,9 @@ function escapeIcsText(raw: string): string {
 export function compileCohortCalendarIcs(rawInput: CohortCalendarInput): CohortCalendarCompilation {
   const serializedInput = JSON.stringify(rawInput ?? {});
   assertNoPrivateSlugsOrSecretsForCalendar(serializedInput);
+  for (const decoded of collectDecodedStringValues(rawInput)) {
+    assertNoPrivateSlugsOrSecretsForCalendar(decoded);
+  }
 
   const parsed = CohortCalendarInputSchema.parse(rawInput);
   const cohortLabel = parsed.cohort_label ?? `AI Architect Academy Cohort (${parsed.cohort_id})`;
@@ -1280,6 +1338,13 @@ export function compileCohortCalendarIcs(rawInput: CohortCalendarInput): CohortC
 
   const [yearStr, monthStr, dayStr] = parsed.start_date.split("-");
   const weekOneMondayUtcMs = Date.UTC(Number(yearStr), Number(monthStr) - 1, Number(dayStr), 0, 0, 0);
+  if (new Date(weekOneMondayUtcMs).getUTCDay() !== 1) {
+    throw new AcademyHandoffSafetyError(
+      "NON_MONDAY_START_DATE",
+      `Cohort calendar start_date "${parsed.start_date}" must fall on a UTC Monday so Wednesday clinic and Friday ship rituals align.`,
+      { start_date: parsed.start_date }
+    );
+  }
   const dtstampUtc = formatIcsUtcTimestamp(weekOneMondayUtcMs);
 
   const DAY_MS = 24 * 60 * 60 * 1000;
@@ -1428,6 +1493,10 @@ export function compileCohortCalendarIcs(rawInput: CohortCalendarInput): CohortC
   icsLines.push("END:VCALENDAR");
   const icsContent = `${icsLines.join("\r\n")}\r\n`;
 
+  for (const event of events) {
+    assertNoPrivateSlugsOrSecretsForCalendar(event.summary);
+    assertNoPrivateSlugsOrSecretsForCalendar(event.description);
+  }
   assertNoPrivateSlugsOrSecretsForCalendar(icsContent);
 
   const calendarDigest = createHash("sha256").update(icsContent, "utf8").digest("hex");

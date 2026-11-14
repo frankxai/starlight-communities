@@ -149,6 +149,14 @@ describe("compileAcademyCircleHandoff", () => {
     bearerInThesis.epistemic_thesis = "Send Authorization: Bearer abcdef1234567890token to Circle";
     expect(() => compileAcademyCircleHandoff(bearerInThesis)).toThrow(/INLINE_CREDENTIAL_BLOCKED/);
 
+    const quotedCircleToken = cloneExample();
+    quotedCircleToken.epistemic_thesis = 'Do not leak circle_api_token="synthetic_token_123456" into drafts';
+    expect(() => compileAcademyCircleHandoff(quotedCircleToken)).toThrow(/INLINE_CREDENTIAL_BLOCKED/);
+
+    const tabbedBearerToken = cloneExample();
+    tabbedBearerToken.day7_transfer_override = "Header Authorization: Bearer\tabcdef1234567890token";
+    expect(() => compileAcademyCircleHandoff(tabbedBearerToken)).toThrow(/INLINE_CREDENTIAL_BLOCKED/);
+
     const privateRepoAttempt = cloneExample();
     privateRepoAttempt.day7_transfer_override = "See https://github.com/frankxai/agentic-ops-hub/blob/main/ops.md";
     expect(() => compileAcademyCircleHandoff(privateRepoAttempt)).toThrow(/PRIVATE_REPO_URL_BLOCKED/);
@@ -349,6 +357,32 @@ describe("compileCohortCalendarIcs", () => {
         notes: "Authorization: Bearer secretToken1234567890"
       })
     ).toThrow(/INLINE_CREDENTIAL_BLOCKED/);
+
+    expect(() =>
+      compileCohortCalendarIcs({
+        cohort_id: "public-cohort-01",
+        start_date: "2026-11-16",
+        notes: 'Use circle_api_token="synthetic_token_123456"'
+      })
+    ).toThrow(/INLINE_CREDENTIAL_BLOCKED/);
+
+    expect(() =>
+      compileCohortCalendarIcs({
+        cohort_id: "public-cohort-01",
+        start_date: "2026-11-16",
+        notes: "Authorization: Bearer\tsecretToken1234567890"
+      })
+    ).toThrow(/INLINE_CREDENTIAL_BLOCKED/);
+
+    try {
+      compileCohortCalendarIcs({
+        cohort_id: "tuesday-cohort",
+        start_date: "2026-11-17"
+      });
+      expect.unreachable("Expected NON_MONDAY_START_DATE for Tuesday 2026-11-17");
+    } catch (error) {
+      expect((error as AcademyHandoffSafetyError).code).toBe("NON_MONDAY_START_DATE");
+    }
   });
 
   it("supports the academy-calendar CLI subcommand for stdout ICS/JSON and --out file export", async () => {
