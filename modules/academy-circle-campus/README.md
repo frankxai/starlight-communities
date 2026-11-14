@@ -20,6 +20,8 @@ This module implements two strict operational rules documented in [`starlight-co
 | [`drafts/01-welcome-announcement.md`](drafts/01-welcome-announcement.md) | Ready-to-review draft copy for the Welcome announcement (`#86` draft-only handoff) |
 | [`drafts/02-visual-system-map-post.md`](drafts/02-visual-system-map-post.md) | Ready-to-review draft copy for the Visual System Map post across FrankX, AAA, SIA, and Circle |
 | [`drafts/03-week-01-field-notes.md`](drafts/03-week-01-field-notes.md) | Ready-to-review draft copy for Week 1 Field Notes (workflow triage, human gates, and kill criteria) |
+| [`drafts/04-icp-onboarding-tracks.md`](drafts/04-icp-onboarding-tracks.md) | Ready-to-review draft copy routing arriving members across the 4 ICP onboarding tracks (`publish_status: draft_do_not_auto_post`) |
+| [`drafts/05-capstone-defense-protocol.md`](drafts/05-capstone-defense-protocol.md) | Ready-to-review draft copy for the Week 12 Capstone Defense Panel & rollback audit (`publish_status: draft_do_not_auto_post`) |
 
 ## Deterministic Compilation & Verification
 
@@ -27,6 +29,12 @@ Compile a validated cohort week handoff plan from the synthetic example payload:
 
 ```bash
 pnpm start -- academy-handoff examples/academy-cohort-week.json
+```
+
+Compile a deterministic 12-week RFC 5545 `.ics` cohort rituals calendar (`Architecture Clinic`, `Async Artifact Critique`, `Ship & Verify Friday`, and Week 12 `Capstone Defense Panel`):
+
+```bash
+pnpm start -- academy-calendar --cohort fall-2026 --start 2026-11-16 --weeks 12 --ics
 ```
 
 Run full typecheck, unit tests, build, and manifest validation:

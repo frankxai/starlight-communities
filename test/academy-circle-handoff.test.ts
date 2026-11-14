@@ -1,6 +1,9 @@
-import { readFile } from "node:fs/promises";
+import { execFile } from "node:child_process";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { promisify } from "node:util";
 import { describe, expect, it } from "vitest";
 import cohortWeekExample from "../examples/academy-cohort-week.json" with { type: "json" };
 import {
@@ -8,10 +11,14 @@ import {
   ACADEMY_CIRCLE_SPACES,
   AcademyHandoffSafetyError,
   compileAcademyCircleHandoff,
+  compileCohortCalendarIcs,
   evaluateBuilderStanding,
+  PRIVATE_ESTATE_REPO_SLUGS,
   type AcademyCohortWeekInput,
   type AcademyIcpLens
 } from "../src/index.js";
+
+const execFileAsync = promisify(execFile);
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 
@@ -203,7 +210,9 @@ describe("compileAcademyCircleHandoff", () => {
     const draftFiles = [
       "modules/academy-circle-campus/drafts/01-welcome-announcement.md",
       "modules/academy-circle-campus/drafts/02-visual-system-map-post.md",
-      "modules/academy-circle-campus/drafts/03-week-01-field-notes.md"
+      "modules/academy-circle-campus/drafts/03-week-01-field-notes.md",
+      "modules/academy-circle-campus/drafts/04-icp-onboarding-tracks.md",
+      "modules/academy-circle-campus/drafts/05-capstone-defense-protocol.md"
     ];
 
     const privateUrlPattern =
@@ -215,6 +224,18 @@ describe("compileAcademyCircleHandoff", () => {
       expect(content).not.toMatch(privateUrlPattern);
     }
 
+    for (const frontmatterDraft of [
+      "modules/academy-circle-campus/drafts/04-icp-onboarding-tracks.md",
+      "modules/academy-circle-campus/drafts/05-capstone-defense-protocol.md"
+    ]) {
+      const content = await readFile(join(repoRoot, frontmatterDraft), "utf8");
+      expect(/^---\r?\n/.test(content)).toBe(true);
+      expect(content).toContain("publish_status: draft_do_not_auto_post");
+      for (const slug of PRIVATE_ESTATE_REPO_SLUGS) {
+        expect(content.toLowerCase()).not.toContain(slug.toLowerCase());
+      }
+    }
+
     const moduleDocs = [
       "modules/academy-circle-campus/README.md",
       "modules/academy-circle-campus/RITUALS_AND_STANDING.md",
@@ -224,6 +245,155 @@ describe("compileAcademyCircleHandoff", () => {
     for (const relativePath of moduleDocs) {
       const content = await readFile(join(repoRoot, relativePath), "utf8");
       expect(content).not.toMatch(privateUrlPattern);
+    }
+  });
+});
+
+describe("compileCohortCalendarIcs", () => {
+  it("generates deterministic RFC 5545 .ics with CRLF line endings and 37 events for a 12-week cohort", () => {
+    const first = compileCohortCalendarIcs({
+      cohort_id: "architect-fall-2026",
+      start_date: "2026-11-16",
+      weeks: 12,
+      icp_lens: "production-builder"
+    });
+    const second = compileCohortCalendarIcs({
+      cohort_id: "architect-fall-2026",
+      start_date: "2026-11-16",
+      weeks: 12,
+      icp_lens: "production-builder"
+    });
+
+    expect(first.schema_version).toBe("starlight.academy_cohort_calendar.v1");
+    expect(first.calendar_digest).toBe(second.calendar_digest);
+    expect(first.ics).toBe(second.ics);
+    expect(first.event_count).toBe(37);
+    expect(first.events).toHaveLength(37);
+
+    // Strictly CRLF line endings (no bare LF)
+    expect(first.ics.includes("\r\n")).toBe(true);
+    expect(first.ics.endsWith("END:VCALENDAR\r\n")).toBe(true);
+    expect(first.ics.replace(/\r\n/g, "").includes("\n")).toBe(false);
+
+    const lines = first.ics.split("\r\n").filter((line) => line.length > 0);
+    expect(lines[0]).toBe("BEGIN:VCALENDAR");
+    expect(lines[lines.length - 1]).toBe("END:VCALENDAR");
+    expect(lines).toContain("VERSION:2.0");
+
+    const beginEventCount = lines.filter((line) => line === "BEGIN:VEVENT").length;
+    const endEventCount = lines.filter((line) => line === "END:VEVENT").length;
+    expect(beginEventCount).toBe(37);
+    expect(endEventCount).toBe(37);
+
+    for (const requiredPrefix of ["UID:", "DTSTAMP:", "DTSTART:", "DTEND:", "SUMMARY:", "DESCRIPTION:"]) {
+      const count = lines.filter((line) => line.startsWith(requiredPrefix)).length;
+      expect(count).toBe(37);
+    }
+
+    // Verify exact weekly rituals + Week 12 Capstone Defense Panel
+    expect(first.events.filter((e) => e.ritual_kind === "architecture_clinic")).toHaveLength(12);
+    expect(first.events.filter((e) => e.ritual_kind === "async_artifact_critique")).toHaveLength(12);
+    expect(first.events.filter((e) => e.ritual_kind === "ship_and_verify_friday")).toHaveLength(12);
+    expect(first.events.filter((e) => e.ritual_kind === "capstone_defense_panel")).toHaveLength(1);
+
+    expect(first.ics).toContain("Architecture Clinic");
+    expect(first.ics).toContain("Async Artifact Critique");
+    expect(first.ics).toContain("Ship & Verify Friday");
+    expect(first.ics).toContain("Capstone Defense Panel");
+
+    // Partial cohort window (< 12 weeks) omits Week 12 Capstone Defense Panel
+    const fourWeek = compileCohortCalendarIcs({
+      cohort_id: "architect-sprint",
+      start_date: "2026-11-16",
+      weeks: 4
+    });
+    expect(fourWeek.event_count).toBe(12);
+    expect(fourWeek.events.some((e) => e.ritual_kind === "capstone_defense_panel")).toBe(false);
+  });
+
+  it("rejects PRIVATE_ESTATE_REPO_SLUGS, private URLs, private domains, and inline credentials", () => {
+    for (const privateSlug of PRIVATE_ESTATE_REPO_SLUGS) {
+      expect(() =>
+        compileCohortCalendarIcs({
+          cohort_id: "public-cohort-01",
+          start_date: "2026-11-16",
+          notes: `Internal reference to ${privateSlug} roadmap`
+        })
+      ).toThrowError(AcademyHandoffSafetyError);
+
+      try {
+        compileCohortCalendarIcs({
+          cohort_id: "public-cohort-01",
+          start_date: "2026-11-16",
+          cohort_label: `https://github.com/frankxai/${privateSlug}`
+        });
+        expect.unreachable(`Expected PRIVATE_REPO_URL_BLOCKED for ${privateSlug}`);
+      } catch (error) {
+        expect((error as AcademyHandoffSafetyError).code).toBe("PRIVATE_REPO_URL_BLOCKED");
+      }
+    }
+
+    const privateDomain = ["starlightintelligence", "ai"].join(".");
+    expect(() =>
+      compileCohortCalendarIcs({
+        cohort_id: "public-cohort-01",
+        start_date: "2026-11-16",
+        organizer_domain: privateDomain
+      })
+    ).toThrow(/PRIVATE_REPO_URL_BLOCKED/);
+
+    expect(() =>
+      compileCohortCalendarIcs({
+        cohort_id: "public-cohort-01",
+        start_date: "2026-11-16",
+        notes: "Authorization: Bearer secretToken1234567890"
+      })
+    ).toThrow(/INLINE_CREDENTIAL_BLOCKED/);
+  });
+
+  it("supports the academy-calendar CLI subcommand for stdout ICS/JSON and --out file export", async () => {
+    const cliEntry = join(repoRoot, "src/cli.ts");
+    const tsxBin = join(repoRoot, "node_modules/tsx/dist/cli.mjs");
+
+    const { stdout: icsStdout } = await execFileAsync(process.execPath, [
+      tsxBin,
+      cliEntry,
+      "academy-calendar",
+      "--cohort",
+      "cli-cohort-2026",
+      "--start",
+      "2026-11-16",
+      "--weeks",
+      "12",
+      "--ics"
+    ]);
+    expect(icsStdout.startsWith("BEGIN:VCALENDAR\r\n")).toBe(true);
+    expect(icsStdout.endsWith("END:VCALENDAR\r\n")).toBe(true);
+
+    const tempDir = await mkdtemp(join(tmpdir(), "starlight-cal-"));
+    try {
+      const outIcsPath = join(tempDir, "cohort.ics");
+      const { stdout: receiptJson } = await execFileAsync(process.execPath, [
+        tsxBin,
+        cliEntry,
+        "academy-calendar",
+        "--cohort",
+        "cli-cohort-2026",
+        "--start",
+        "2026-11-16",
+        "--weeks",
+        "12",
+        "--out",
+        outIcsPath
+      ]);
+      const receipt = JSON.parse(receiptJson) as { event_count: number; format: string };
+      expect(receipt.event_count).toBe(37);
+      expect(receipt.format).toBe("ics");
+
+      const writtenIcs = await readFile(outIcsPath, "utf8");
+      expect(writtenIcs).toBe(icsStdout);
+    } finally {
+      await rm(tempDir, { recursive: true, force: true });
     }
   });
 });

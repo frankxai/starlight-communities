@@ -1,4 +1,5 @@
 export * from "./academy-circle-handoff.js";
+export { compileCohortCalendarIcs } from "./academy-circle-handoff.js";
 export * from "./agents.js";
 export * from "./cadence.js";
 export * from "./gates.js";

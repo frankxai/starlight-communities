@@ -594,7 +594,7 @@ const FORBIDDEN_CREDENTIAL_PATTERNS: readonly RegExp[] = [
   /\bcircle_api_token\s*[:=]\s*["']?[A-Za-z0-9._-]{8,}/i
 ];
 
-const PRIVATE_ESTATE_REPO_SLUGS = [
+export const PRIVATE_ESTATE_REPO_SLUGS = [
   "starlight-intelligence-academy",
   "starlight-command",
   "agentic-ops-hub",
@@ -1145,5 +1145,308 @@ export function compileAcademyCircleHandoff(rawInput: AcademyCohortWeekInput): A
     standing_evaluations: standingEvaluations,
     gates,
     creation_cell_run_sheet: creationCellRunSheet
+  });
+}
+
+export const COHORT_CALENDAR_SCHEMA_VERSION = "starlight.academy_cohort_calendar.v1" as const;
+
+export const CohortCalendarRitualKindSchema = z.enum([
+  "architecture_clinic",
+  "async_artifact_critique",
+  "ship_and_verify_friday",
+  "capstone_defense_panel"
+]);
+export type CohortCalendarRitualKind = z.infer<typeof CohortCalendarRitualKindSchema>;
+
+function isValidIsoCalendarDate(value: string): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return false;
+  }
+  const [yearStr, monthStr, dayStr] = value.split("-");
+  const epoch = Date.UTC(Number(yearStr), Number(monthStr) - 1, Number(dayStr), 0, 0, 0);
+  if (Number.isNaN(epoch)) {
+    return false;
+  }
+  return new Date(epoch).toISOString().slice(0, 10) === value;
+}
+
+export const CohortCalendarInputSchema = z.object({
+  cohort_id: z
+    .string()
+    .min(3)
+    .regex(/^[a-z0-9-]+$/i, "cohort_id must be a clean alphanumeric slug"),
+  cohort_label: z.string().min(1).optional(),
+  start_date: z
+    .string()
+    .refine(isValidIsoCalendarDate, "start_date must be a valid YYYY-MM-DD calendar date")
+    .default("2026-11-16"),
+  weeks: z.number().int().min(1).max(12).default(12),
+  icp_lens: AcademyIcpLensSchema.default("enterprise-architect"),
+  organizer_domain: z
+    .string()
+    .min(3)
+    .regex(/^[a-z0-9.-]+\.[a-z]{2,}$/i, "organizer_domain must be a valid hostname")
+    .default("starlightintelligence.academy"),
+  notes: z.string().min(1).optional()
+});
+export type CohortCalendarInput = z.input<typeof CohortCalendarInputSchema>;
+
+export const CohortCalendarEventSchema = z.object({
+  uid: z.string().min(1),
+  week_number: z.number().int().min(1).max(12),
+  act: AcademyActSchema,
+  ritual_kind: CohortCalendarRitualKindSchema,
+  space_slug: CircleCampusSpaceSlugSchema,
+  summary: z.string().min(1),
+  description: z.string().min(1),
+  dtstart_utc: z.string().regex(/^\d{8}T\d{6}Z$/),
+  dtend_utc: z.string().regex(/^\d{8}T\d{6}Z$/),
+  duration_minutes: z.number().int().positive()
+});
+export type CohortCalendarEvent = z.infer<typeof CohortCalendarEventSchema>;
+
+export const CohortCalendarCompilationSchema = z.object({
+  schema_version: z.literal(COHORT_CALENDAR_SCHEMA_VERSION),
+  cohort_id: z.string().min(3),
+  cohort_label: z.string().min(1),
+  start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  weeks: z.number().int().min(1).max(12),
+  dtstamp_utc: z.string().regex(/^\d{8}T\d{6}Z$/),
+  event_count: z.number().int().positive(),
+  calendar_digest: z.string().regex(/^[a-f0-9]{64}$/),
+  safety_posture: z.object({
+    status: z.literal("draft"),
+    external_calendar_send: z.literal(false),
+    private_repo_slugs_checked: z.number().int().positive()
+  }),
+  events: z.array(CohortCalendarEventSchema).min(3),
+  ics: z.string().min(32)
+});
+export type CohortCalendarCompilation = z.infer<typeof CohortCalendarCompilationSchema>;
+
+const PRIVATE_ESTATE_DOMAINS: readonly string[] = [
+  ["starlightintelligence", "ai"].join(".")
+];
+
+function assertNoPrivateSlugsOrSecretsForCalendar(textToValidate: string): void {
+  assertNoSecretsOrPrivateUrls(textToValidate);
+
+  for (const privateSlug of PRIVATE_ESTATE_REPO_SLUGS) {
+    const bareSlugPattern = new RegExp(`(?:^|[^a-z0-9])${privateSlug}(?:$|[^a-z0-9])`, "i");
+    if (bareSlugPattern.test(textToValidate)) {
+      throw new AcademyHandoffSafetyError(
+        "PRIVATE_REPO_URL_BLOCKED",
+        `Cohort calendar payload cannot include private estate slug "${privateSlug}".`,
+        { private_slug: privateSlug }
+      );
+    }
+  }
+
+  for (const privateDomain of PRIVATE_ESTATE_DOMAINS) {
+    const escapedDomain = privateDomain.replace(/\./g, "\\.");
+    const domainPattern = new RegExp(`(?:^|[^a-z0-9-])${escapedDomain}\\b`, "i");
+    if (domainPattern.test(textToValidate)) {
+      throw new AcademyHandoffSafetyError(
+        "PRIVATE_REPO_URL_BLOCKED",
+        `Cohort calendar payload cannot include private estate domain "${privateDomain}".`,
+        { private_domain: privateDomain }
+      );
+    }
+  }
+}
+
+function formatIcsUtcTimestamp(epochMs: number): string {
+  return new Date(epochMs)
+    .toISOString()
+    .replace(/[-:]/g, "")
+    .replace(/\.\d{3}Z$/, "Z");
+}
+
+function escapeIcsText(raw: string): string {
+  return raw
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\r?\n/g, "\\n");
+}
+
+export function compileCohortCalendarIcs(rawInput: CohortCalendarInput): CohortCalendarCompilation {
+  const serializedInput = JSON.stringify(rawInput ?? {});
+  assertNoPrivateSlugsOrSecretsForCalendar(serializedInput);
+
+  const parsed = CohortCalendarInputSchema.parse(rawInput);
+  const cohortLabel = parsed.cohort_label ?? `AI Architect Academy Cohort (${parsed.cohort_id})`;
+  const lensMeta = ICP_LENS_BRIEFS[parsed.icp_lens];
+
+  const [yearStr, monthStr, dayStr] = parsed.start_date.split("-");
+  const weekOneMondayUtcMs = Date.UTC(Number(yearStr), Number(monthStr) - 1, Number(dayStr), 0, 0, 0);
+  const dtstampUtc = formatIcsUtcTimestamp(weekOneMondayUtcMs);
+
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const MINUTE_MS = 60 * 1000;
+
+  const events: CohortCalendarEvent[] = [];
+
+  for (let week = 1; week <= parsed.weeks; week += 1) {
+    const paddedWeek = String(week).padStart(2, "0");
+    const weekMeta = CanonicalCurriculumWeekMap[week];
+    const weekBaseMs = weekOneMondayUtcMs + (week - 1) * 7 * DAY_MS;
+
+    const makeUid = (ritualKind: CohortCalendarRitualKind): string => {
+      const uidHash = createHash("sha256")
+        .update(`${parsed.cohort_id}:${parsed.start_date}:w${paddedWeek}:${ritualKind}:${parsed.icp_lens}`)
+        .digest("hex")
+        .slice(0, 12);
+      return `${parsed.cohort_id}-w${paddedWeek}-${ritualKind.replace(/_/g, "-")}-${uidHash}@${parsed.organizer_domain}`;
+    };
+
+    const noteSuffix = parsed.notes ? `\nCohort note: ${parsed.notes}` : "";
+
+    // 1. Wednesday 16:00-17:00 UTC: Architecture Clinic
+    const clinicStartMs = weekBaseMs + 2 * DAY_MS + 16 * 60 * MINUTE_MS;
+    const clinicDuration = 60;
+    events.push(
+      CohortCalendarEventSchema.parse({
+        uid: makeUid("architecture_clinic"),
+        week_number: week,
+        act: weekMeta.act,
+        ritual_kind: "architecture_clinic",
+        space_slug: "weekly-red-gate-lab-clinic",
+        summary: `[Week ${paddedWeek}] Architecture Clinic — ${weekMeta.canonical_focus}`,
+        description: [
+          `Cohort: ${cohortLabel} (${parsed.cohort_id})`,
+          `Track Lens: ${lensMeta.label}`,
+          `Circle Space: weekly-red-gate-lab-clinic`,
+          "Ritual: Compare 15-minute unaided hypotheses, diagnose offline red-gate failures, and verify human approval boundaries.",
+          "Exit Artifact: Passing offline red-gate test run and updated trust-boundary note (draft-staged; external_calendar_send=false)."
+        ].join("\n") + noteSuffix,
+        dtstart_utc: formatIcsUtcTimestamp(clinicStartMs),
+        dtend_utc: formatIcsUtcTimestamp(clinicStartMs + clinicDuration * MINUTE_MS),
+        duration_minutes: clinicDuration
+      })
+    );
+
+    // 2. Thursday 16:00-16:20 UTC: Async Artifact Critique
+    const critiqueStartMs = weekBaseMs + 3 * DAY_MS + 16 * 60 * MINUTE_MS;
+    const critiqueDuration = 20;
+    events.push(
+      CohortCalendarEventSchema.parse({
+        uid: makeUid("async_artifact_critique"),
+        week_number: week,
+        act: weekMeta.act,
+        ritual_kind: "async_artifact_critique",
+        space_slug: "architecture-critique-arena",
+        summary: `[Week ${paddedWeek}] Async Artifact Critique — 20-Minute Rubric Peer Review`,
+        description: [
+          `Cohort: ${cohortLabel} (${parsed.cohort_id})`,
+          `Track Lens: ${lensMeta.label}`,
+          `Circle Space: architecture-critique-arena`,
+          "Ritual: 00-05m plain-language boundary restatement; 05-12m non-compensable red-gate probe; 12-17m test/trace check; 17-20m next commitment.",
+          "Exit Artifact: Structured 4-block rubric critique with zero vanity scoring."
+        ].join("\n") + noteSuffix,
+        dtstart_utc: formatIcsUtcTimestamp(critiqueStartMs),
+        dtend_utc: formatIcsUtcTimestamp(critiqueStartMs + critiqueDuration * MINUTE_MS),
+        duration_minutes: critiqueDuration
+      })
+    );
+
+    // 3. Friday 16:00-16:45 UTC: Ship & Verify Friday
+    const fridayStartMs = weekBaseMs + 4 * DAY_MS + 16 * 60 * MINUTE_MS;
+    const fridayDuration = 45;
+    events.push(
+      CohortCalendarEventSchema.parse({
+        uid: makeUid("ship_and_verify_friday"),
+        week_number: week,
+        act: weekMeta.act,
+        ritual_kind: "ship_and_verify_friday",
+        space_slug: "gencreator-studio-showcase",
+        summary: `[Week ${paddedWeek}] Ship & Verify Friday — Proof Showcase & Day-7 Transfer Lock`,
+        description: [
+          `Cohort: ${cohortLabel} (${parsed.cohort_id})`,
+          `Track Lens: ${lensMeta.label}`,
+          `Circle Space: gencreator-studio-showcase`,
+          `Day-7 Perturbation Queued: ${weekMeta.default_day7_perturbation}`,
+          "Exit Artifact: Verified repository artifact, architecture plate or Remotion manifest, and scheduled Day-7 transfer check."
+        ].join("\n") + noteSuffix,
+        dtstart_utc: formatIcsUtcTimestamp(fridayStartMs),
+        dtend_utc: formatIcsUtcTimestamp(fridayStartMs + fridayDuration * MINUTE_MS),
+        duration_minutes: fridayDuration
+      })
+    );
+
+    // 4. Week 12 Friday 17:30-19:00 UTC: Capstone Defense Panel
+    if (week === 12) {
+      const capstoneStartMs = weekBaseMs + 4 * DAY_MS + (17 * 60 + 30) * MINUTE_MS;
+      const capstoneDuration = 90;
+      events.push(
+        CohortCalendarEventSchema.parse({
+          uid: makeUid("capstone_defense_panel"),
+          week_number: 12,
+          act: weekMeta.act,
+          ritual_kind: "capstone_defense_panel",
+          space_slug: "alumni-builders-office-hours",
+          summary: "[Week 12] Capstone Defense Panel — Sovereign AI CoE Architecture Defense",
+          description: [
+            `Cohort: ${cohortLabel} (${parsed.cohort_id})`,
+            `Track Lens: ${lensMeta.label}`,
+            `Circle Space: alumni-builders-office-hours`,
+            "Ritual: Live fault-injection perturbation, non-compensable eval admission audit (p95 <= 4200ms, cost <= $0.05, safety == 100%), and rollback verification.",
+            "Exit Artifact: Ratified starlight.capability_receipt.v1 and Verified Systems Architect standing."
+          ].join("\n") + noteSuffix,
+          dtstart_utc: formatIcsUtcTimestamp(capstoneStartMs),
+          dtend_utc: formatIcsUtcTimestamp(capstoneStartMs + capstoneDuration * MINUTE_MS),
+          duration_minutes: capstoneDuration
+        })
+      );
+    }
+  }
+
+  const icsLines: string[] = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Starlight Communities//Academy Cohort Calendar v1//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    `X-WR-CALNAME:${escapeIcsText(`${cohortLabel} — Rituals Calendar`)}`
+  ];
+
+  for (const event of events) {
+    icsLines.push(
+      "BEGIN:VEVENT",
+      `UID:${event.uid}`,
+      `DTSTAMP:${dtstampUtc}`,
+      `DTSTART:${event.dtstart_utc}`,
+      `DTEND:${event.dtend_utc}`,
+      `SUMMARY:${escapeIcsText(event.summary)}`,
+      `DESCRIPTION:${escapeIcsText(event.description)}`,
+      `LOCATION:${escapeIcsText(`Circle Campus / ${event.space_slug}`)}`,
+      "STATUS:TENTATIVE",
+      "END:VEVENT"
+    );
+  }
+
+  icsLines.push("END:VCALENDAR");
+  const icsContent = `${icsLines.join("\r\n")}\r\n`;
+
+  assertNoPrivateSlugsOrSecretsForCalendar(icsContent);
+
+  const calendarDigest = createHash("sha256").update(icsContent, "utf8").digest("hex");
+
+  return CohortCalendarCompilationSchema.parse({
+    schema_version: COHORT_CALENDAR_SCHEMA_VERSION,
+    cohort_id: parsed.cohort_id,
+    cohort_label: cohortLabel,
+    start_date: parsed.start_date,
+    weeks: parsed.weeks,
+    dtstamp_utc: dtstampUtc,
+    event_count: events.length,
+    calendar_digest: calendarDigest,
+    safety_posture: {
+      status: "draft",
+      external_calendar_send: false,
+      private_repo_slugs_checked: PRIVATE_ESTATE_REPO_SLUGS.length
+    },
+    events,
+    ics: icsContent
   });
 }
