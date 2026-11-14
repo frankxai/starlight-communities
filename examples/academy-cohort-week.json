@@ -1,0 +1,154 @@
+{
+  "cohort_id": "sia-architect-foundations",
+  "week_number": 3,
+  "week_id": "2026-W46",
+  "act": "act_1_foundations",
+  "title": "Trust Boundaries, Prompt-Injection Firewalls & Citation Grounding",
+  "epistemic_thesis": "Retrieved text is untrusted data to cite, never operator instructions to execute; an uncited contract answer teaches teams to stop checking.",
+  "icp_lens": "enterprise-architect",
+  "secondary_icp_lenses": [
+    "production-builder",
+    "workflow-operator",
+    "technical-creator"
+  ],
+  "sia_missions": [
+    {
+      "mission_id": "systems.trust-boundary-firewall@0.1.0",
+      "title": "Isolate T0/T1 Operator Authority from T3 Retrieved Data",
+      "sia_route": "/academy/curriculum-atlas",
+      "aaa_lab_path": "labs/04-trust-boundary-firewall",
+      "worked_run_id": "contract-rag",
+      "expected_repo_artifact": "05-trust-boundary.md and passing offline firewall unit tests"
+    },
+    {
+      "mission_id": "systems.eval-citation-admission@0.1.0",
+      "title": "Enforce Clause Citation & Empty-Evidence Human Fallback",
+      "sia_route": "/academy/studio",
+      "aaa_lab_path": "labs/05-eval-admission-gate",
+      "worked_run_id": "contract-rag",
+      "expected_repo_artifact": "cases.jsonl (golden, refusal, indirect injection) with receipt json"
+    }
+  ],
+  "red_gates": [
+    {
+      "gate_id": "rg-t3-quarantine",
+      "label": "Zero untrusted T3 retrieval concatenated into T0/T1 instruction channel",
+      "refusal_code": "trust-boundary-violation",
+      "verification_command": "python -m unittest discover -s labs/04-trust-boundary-firewall/tests -v",
+      "non_compensable": true
+    },
+    {
+      "gate_id": "rg-citation-or-refusal",
+      "label": "Uncited claims and empty-evidence answers fail closed to named fallback owner",
+      "refusal_code": "uncited-claim-blocked",
+      "verification_command": "python -m unittest discover -s labs/05-eval-admission-gate/tests -v",
+      "non_compensable": true
+    }
+  ],
+  "execution_mode": {
+    "dry_run": true,
+    "desired_status": "draft",
+    "live_http_mutation": false,
+    "overwrite_existing_circle_drafts": false,
+    "protected_circle_draft_ids": [
+      "37119809",
+      "37119811"
+    ]
+  },
+  "approval_receipt": {
+    "receipt_id": "rcpt-sia86-campus-draft-w03",
+    "issue_refs": [
+      "starlight-communities#23",
+      "starlight-intelligence-academy#86"
+    ],
+    "approved_by": "community_steward_staging",
+    "approved_at": "2026-11-14T09:30:00.000Z",
+    "approved_scope": "draft_plan_only",
+    "notes": "Synthetic example receipt authorizing local draft-only compilation; human review required before Circle publication."
+  },
+  "members": [
+    {
+      "member_id": "elena-synth",
+      "display_name": "Elena (Synthetic)",
+      "timezone": "Europe/Berlin",
+      "goals": ["trust boundaries", "enterprise governance"],
+      "skills": ["architecture", "python", "security review"],
+      "current_project": "Quarantine vendor addendum text before contract QA synthesis.",
+      "preferred_rhythm": "weekday_mornings",
+      "social_energy": "small_group",
+      "consent_flags": {
+        "allowCellMatching": true,
+        "allowProfileMemory": true,
+        "allowAsyncProofSummary": true,
+        "allowRawMediaStorage": false,
+        "allowPublicRecognition": false,
+        "allowPlatformSync": false
+      }
+    },
+    {
+      "member_id": "marcus-synth",
+      "display_name": "Marcus (Synthetic)",
+      "timezone": "America/New_York",
+      "goals": ["trust boundaries", "offline evals"],
+      "skills": ["typescript", "mcp", "testing"],
+      "current_project": "Add deterministic refusal routing to a support triage worker.",
+      "preferred_rhythm": "weekday_evenings",
+      "social_energy": "pair",
+      "consent_flags": {
+        "allowCellMatching": true,
+        "allowProfileMemory": true,
+        "allowAsyncProofSummary": true,
+        "allowRawMediaStorage": false,
+        "allowPublicRecognition": false,
+        "allowPlatformSync": false
+      }
+    },
+    {
+      "member_id": "sana-synth",
+      "display_name": "Sana (Synthetic)",
+      "timezone": "Europe/London",
+      "goals": ["trust boundaries", "visual architecture"],
+      "skills": ["svg diagrams", "technical writing", "workflow ops"],
+      "current_project": "Draw a 4-plane trust boundary plate for legal operations review.",
+      "preferred_rhythm": "async_first",
+      "social_energy": "host",
+      "consent_flags": {
+        "allowCellMatching": true,
+        "allowProfileMemory": true,
+        "allowAsyncProofSummary": true,
+        "allowRawMediaStorage": false,
+        "allowPublicRecognition": false,
+        "allowPlatformSync": false
+      }
+    }
+  ],
+  "standing_snapshots": [
+    {
+      "member_id": "elena-synth",
+      "arrival_path_completed": true,
+      "shipped_repo_artifacts": 3,
+      "red_gates_passed": 3,
+      "rubric_peer_reviews": 2,
+      "day7_transfers_verified": 0,
+      "cells_stewarded_or_upstream_prs": 0
+    },
+    {
+      "member_id": "marcus-synth",
+      "arrival_path_completed": true,
+      "shipped_repo_artifacts": 1,
+      "red_gates_passed": 1,
+      "rubric_peer_reviews": 0,
+      "day7_transfers_verified": 0,
+      "cells_stewarded_or_upstream_prs": 0
+    },
+    {
+      "member_id": "sana-synth",
+      "arrival_path_completed": true,
+      "shipped_repo_artifacts": 6,
+      "red_gates_passed": 6,
+      "rubric_peer_reviews": 4,
+      "day7_transfers_verified": 2,
+      "cells_stewarded_or_upstream_prs": 0
+    }
+  ]
+}
