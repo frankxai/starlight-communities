@@ -1,0 +1,189 @@
+{
+  "schema": "starlight.academy_circle_campus.v1",
+  "version": "1.0.0",
+  "status": "draft_staged_human_gated",
+  "governance": {
+    "canonical_source_of_truth": "sis_memory_and_git_capability_receipts",
+    "delivery_surface": "circle_adapter_dry_run",
+    "issue_gates": [
+      "starlight-communities#23",
+      "starlight-intelligence-academy#86"
+    ],
+    "circle_space_budget": {
+      "existing_space_cap": 30,
+      "mapped_campus_spaces": 6,
+      "reuses_existing_slots": true,
+      "requires_plan_upgrade": false,
+      "protected_circle_draft_ids": [
+        "37119809",
+        "37119811"
+      ]
+    },
+    "fail_closed_rules": [
+      "Reject desired_status other than draft",
+      "Reject dry_run=false or live_http_mutation=true",
+      "Reject overwrite_existing_circle_drafts=true",
+      "Require explicit human approval_receipt referencing starlight-intelligence-academy#86",
+      "Reject inline API tokens, bearer headers, and private repository URLs",
+      "Prohibit XP, login streaks, message-volume scores, and shame leaderboards"
+    ]
+  },
+  "icp_lenses": [
+    {
+      "id": "enterprise-architect",
+      "label": "Enterprise Systems Architect",
+      "entry_surface": "https://starlightintelligence.academy/academy/curriculum-atlas",
+      "primary_artifacts": [
+        "AGENT_SYSTEM_CONSTITUTION.md",
+        "ADR-0001..0006",
+        "05-trust-boundary.md",
+        "starlight.capability_receipt.v1"
+      ]
+    },
+    {
+      "id": "production-builder",
+      "label": "Production AI Builder",
+      "entry_surface": "https://github.com/frankxai/ai-architect-academy",
+      "primary_artifacts": [
+        "labs/01-rag-pipeline",
+        "labs/02-multi-agent-system",
+        "labs/03-mcp-server",
+        "labs/04-trust-boundary-firewall",
+        "labs/05-eval-admission-gate"
+      ]
+    },
+    {
+      "id": "technical-creator",
+      "label": "Technical GenCreator",
+      "entry_surface": "https://starlightintelligence.academy/academy/studio",
+      "primary_artifacts": [
+        "design.md",
+        "SVG system architecture plates",
+        "Remotion video manifests and WebVTT captions",
+        "Multimodal product launch specs (MFG-01..12)"
+      ]
+    },
+    {
+      "id": "workflow-operator",
+      "label": "Structured Workflow Operator",
+      "entry_surface": "https://starlightintelligence.academy/academy",
+      "primary_artifacts": [
+        "00-frame.md workflow triage packet",
+        "Automate vs assist-only vs do-not-automate decision matrix",
+        "Human approval queue and rollback checklist"
+      ]
+    }
+  ],
+  "spaces": [
+    {
+      "slug": "start-here-orientation",
+      "title": "Start Here / Orientation",
+      "space_group": "orientation",
+      "access_tier": "member",
+      "reuses_existing_space_slot": true,
+      "maps_to_circle_slot": "Welcome to Starlight & Start Here orientation slot",
+      "sia_routes": ["/academy", "/academy/curriculum-atlas"],
+      "aaa_surfaces": ["02-learning-paths/12-week-production-architect.md"],
+      "weekly_ritual": "48-hour Arrival Path (#23), ICP lens selection, and Week 1 Field Notes signal",
+      "required_output": "Structured 5-line Field Note with workflow triage and measurable kill criterion"
+    },
+    {
+      "slug": "architecture-critique-arena",
+      "title": "Architecture Critique Arena",
+      "space_group": "engineering_forge",
+      "access_tier": "operator_and_cohort",
+      "reuses_existing_space_slot": true,
+      "maps_to_circle_slot": "Technical Deep Dives & System Architecture Critique slot",
+      "sia_routes": ["/academy/studio", "/academy/curriculum-atlas"],
+      "aaa_surfaces": ["01-design-patterns", "15-workflows/peer-review.md"],
+      "weekly_ritual": "Thursday 20-minute Async Peer Review on ADRs, constitutions, and boundary contracts",
+      "required_output": "4-block rubric critique citing concrete repository or studio evidence"
+    },
+    {
+      "slug": "weekly-red-gate-lab-clinic",
+      "title": "Weekly Red-Gate Lab Clinic",
+      "space_group": "engineering_forge",
+      "access_tier": "operator_and_cohort",
+      "reuses_existing_space_slot": true,
+      "maps_to_circle_slot": "Weekly Creation Lab & Red-Gate Clinic slot",
+      "sia_routes": ["/academy/studio", "/academy/evaluation"],
+      "aaa_surfaces": [
+        "labs/01-rag-pipeline",
+        "labs/02-multi-agent-system",
+        "labs/03-mcp-server",
+        "labs/04-trust-boundary-firewall",
+        "labs/05-eval-admission-gate"
+      ],
+      "weekly_ritual": "Monday 15-minute UnaidedAttempt hypothesis + Wednesday offline test verification",
+      "required_output": "Deterministic offline test pass output and non-compensable red-gate receipt"
+    },
+    {
+      "slug": "worked-run-trace-exchange",
+      "title": "Worked-Run Trace Exchange",
+      "space_group": "engineering_forge",
+      "access_tier": "operator_and_cohort",
+      "reuses_existing_space_slot": true,
+      "maps_to_circle_slot": "Field Notes & Forensic Trace Library slot",
+      "sia_routes": ["/academy/evaluation", "/academy/curriculum-atlas"],
+      "aaa_surfaces": ["site/app/worked-run/page.tsx", "07-evaluation"],
+      "weekly_ritual": "Forensic dissection of failing traces (contract-rag, support-triage, personal-ai-coe)",
+      "required_output": "Annotated failure trace + changed assumption delta from Monday's unaided attempt"
+    },
+    {
+      "slug": "gencreator-studio-showcase",
+      "title": "GenCreator Studio Showcase",
+      "space_group": "studio_and_alumni",
+      "access_tier": "member",
+      "reuses_existing_space_slot": true,
+      "maps_to_circle_slot": "Visible Proof & Studio Showcase slot",
+      "sia_routes": ["/academy/studio", "/academy/curriculum-atlas"],
+      "aaa_surfaces": ["assets/diagrams"],
+      "weekly_ritual": "Friday showcase of shipped SVG architecture plates, Remotion explainers, and multimodal specs",
+      "required_output": "Reviewed public-safe diagram, video manifest, or build demo"
+    },
+    {
+      "slug": "alumni-builders-office-hours",
+      "title": "Alumni Builders & Office Hours",
+      "space_group": "studio_and_alumni",
+      "access_tier": "operator_and_cohort",
+      "reuses_existing_space_slot": true,
+      "maps_to_circle_slot": "Mastermind Office Hours & Alumni Steward slot",
+      "sia_routes": ["/academy", "/academy/studio"],
+      "aaa_surfaces": ["08-governance", "02-learning-paths/12-week-production-architect.md"],
+      "weekly_ritual": "Day-7 Changed-Context Transfer verification and Creation Cell steward clinics",
+      "required_output": "Unassisted Day-7 transfer diff revalidating starlight.capability_receipt.v1"
+    }
+  ],
+  "standing_tiers": [
+    {
+      "tier": "observer",
+      "order": 1,
+      "label": "Observer (Arrival Verified)",
+      "proof_basis": "Completed 48-hour Arrival Path (#23), ICP lens selection, and first structured Field Note"
+    },
+    {
+      "tier": "scoped_builder",
+      "order": 2,
+      "label": "Scoped Builder",
+      "proof_basis": "At least 1 shipped repository artifact and 1 passed non-compensable red gate"
+    },
+    {
+      "tier": "red_gate_verifier",
+      "order": 3,
+      "label": "Red-Gate Verifier",
+      "proof_basis": "At least 3 shipped repo artifacts, 3 passed red gates, and 2 rubric-backed 20-minute peer reviews"
+    },
+    {
+      "tier": "verified_architect",
+      "order": 4,
+      "label": "Verified Systems Architect",
+      "proof_basis": "At least 6 shipped repo artifacts, 6 passed red gates, 4 peer reviews, and 2 verified Day-7 changed-context transfers"
+    },
+    {
+      "tier": "cell_steward",
+      "order": 5,
+      "label": "Cell Steward & Pattern Maintainer",
+      "proof_basis": "At least 8 shipped repo artifacts, 8 passed red gates, 6 peer reviews, 3 Day-7 transfers, plus 1 Creation Cell facilitated or reviewed upstream contribution"
+    }
+  ]
+}
