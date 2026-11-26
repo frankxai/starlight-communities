@@ -27,14 +27,14 @@ During your first 48 hours, pick **one primary lens** so your weekly labs, 20-mi
 - **Who this fits:** Staff/principal engineers, security leads, and platform architects governing multi-team AI deployments.
 - **What you stress-test:** `T0/T1` constitution pinning vs. untrusted `T3` retrieved data, VPC and regional data-residency boundaries, ADR trade-off records, and multi-provider gateway failover.
 - **Week 1 proof artifact:** `00-frame.md` naming your workflow boundary, accountable human approver, rollback path, and numeric `killCriterion`.
-- **Paired surfaces:** Interactive Atlas at [Starlight Intelligence Academy](https://starlightintelligence.academy/academy/curriculum-atlas) and `labs/04-trust-boundary-firewall` in [AI Architect Academy](https://github.com/frankxai/ai-architect-academy).
+- **Paired surfaces:** Interactive Atlas at [Starlight Intelligence Academy](https://starlightintelligence.academy/academy/curriculum-atlas) and `labs/05-tool-authority-gate` in [AI Architect Academy](https://github.com/frankxai/ai-architect-academy).
 
 ## 2. Production AI Builder (`production-builder`)
 
 - **Who this fits:** Applied AI and backend engineers shipping Python/TypeScript retrieval pipelines, MCP servers, and multi-agent state machines.
 - **What you stress-test:** Sliding-window chunk overlap (`0` dropped tail clauses), Reciprocal Rank Fusion (`k=60`), zero-trust MCP tool schemas, and 5-case offline admission gates (`p95 <= 4200ms`, `cost <= $0.05`, `safety == 100%`).
 - **Week 1 proof artifact:** Timestamped 15-minute `UnaidedAttempt` root-cause note plus passing stdlib/Vitest offline suite output.
-- **Paired surfaces:** `labs/01-rag-pipeline` through `labs/05-eval-admission-gate` in [AI Architect Academy](https://github.com/frankxai/ai-architect-academy) and `/academy/evaluation` at [Starlight Intelligence Academy](https://starlightintelligence.academy/academy).
+- **Paired surfaces:** `labs/01-rag-pipeline` through `labs/05-tool-authority-gate` in [AI Architect Academy](https://github.com/frankxai/ai-architect-academy) and `/academy/evaluation` at [Starlight Intelligence Academy](https://starlightintelligence.academy/academy).
 
 ## 3. Technical GenCreator (`technical-creator`)
 
