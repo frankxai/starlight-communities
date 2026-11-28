@@ -48,8 +48,8 @@
         "labs/01-rag-pipeline",
         "labs/02-multi-agent-system",
         "labs/03-mcp-server",
-        "labs/04-trust-boundary-firewall",
-        "labs/05-eval-admission-gate"
+        "labs/04-eval-harness",
+        "labs/05-tool-authority-gate"
       ]
     },
     {
@@ -111,8 +111,8 @@
         "labs/01-rag-pipeline",
         "labs/02-multi-agent-system",
         "labs/03-mcp-server",
-        "labs/04-trust-boundary-firewall",
-        "labs/05-eval-admission-gate"
+        "labs/04-eval-harness",
+        "labs/05-tool-authority-gate"
       ],
       "weekly_ritual": "Monday 15-minute UnaidedAttempt hypothesis + Wednesday offline test verification",
       "required_output": "Deterministic offline test pass output and non-compensable red-gate receipt"

@@ -13,7 +13,7 @@ Circle community `621143` operates within a 30-space budget. Rather than minting
 |---|---|---|---|
 | **Start Here / Orientation** | Member | SIA `/academy`, `/academy/curriculum-atlas` · AAA `02-learning-paths/12-week-production-architect.md` | 48-hour Arrival Path (`#23`), ICP track routing, and Week 1 Field Notes |
 | **Architecture Critique Arena** | Operator & Cohort | SIA `/academy/studio` · AAA `01-design-patterns`, `15-workflows/peer-review.md` | Thursday 20-minute Async Peer Review on ADRs, constitutions, and boundary contracts |
-| **Weekly Red-Gate Lab Clinic** | Operator & Cohort | SIA `/academy/evaluation` · AAA `labs/01-rag-pipeline` .. `labs/05-eval-admission-gate` | Monday 15-minute `UnaidedAttempt` + Wednesday offline test diagnosis |
+| **Weekly Red-Gate Lab Clinic** | Operator & Cohort | SIA `/academy/evaluation` · AAA `labs/01-rag-pipeline` .. `labs/05-tool-authority-gate` | Monday 15-minute `UnaidedAttempt` + Wednesday offline test diagnosis |
 | **Worked-Run Trace Exchange** | Operator & Cohort | SIA `/academy/evaluation` · AAA `site/app/worked-run/page.tsx`, `07-evaluation` | Dissecting real failure modes (`contract-rag`, `support-triage`, `personal-ai-coe`) |
 | **GenCreator Studio Showcase** | Member | SIA `/academy/studio` · AAA `assets/diagrams` | Friday showcase of shipped SVG plates, Remotion explainers, and multimodal specs |
 | **Alumni Builders & Office Hours** | Operator & Cohort | SIA `/academy` · AAA `08-governance` | Day-7 Changed-Context Transfer verification and Creation Cell steward clinics |
